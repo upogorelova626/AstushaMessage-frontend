@@ -1,0 +1,75 @@
+<div class="wrapper">
+  <div class="head">
+    <nav class="head__main">
+      <button
+        tuiButton
+        appearance="flat"
+        class="round-button"
+        iconStart="@tui.message-square-text"
+        aria-label="Чаты"
+        tuiHint="Чаты"
+        tuiHintDirection="end"
+        (click)="goTo('/chats')"
+      ></button>
+
+      <button
+        tuiButton
+        appearance="flat"
+        class="round-button"
+        iconStart="@tui.phone"
+        aria-label="Звонки"
+        tuiHint="Звонки"
+        tuiHintDirection="end"
+        (click)="goTo('/calls')"
+      ></button>
+    </nav>
+
+    <nav class="head__secondary">
+      <button
+        tuiButton
+        appearance="flat"
+        class="round-button"
+        iconStart="@tui.info"
+        aria-label="Статус"
+        tuiHint="Статус"
+        tuiHintDirection="end"
+        (click)="goTo('/status')"
+      ></button>
+
+      <button
+        tuiButton
+        appearance="flat"
+        class="round-button"
+        iconStart="@tui.user-round-group"
+        aria-label="Сообщества"
+        tuiHint="Сообщества"
+        tuiHintDirection="end"
+        (click)="goTo('/publics')"
+      ></button>
+    </nav>
+  </div>
+
+  <div class="foot">
+    <button
+      tuiButton
+      appearance="flat"
+      class="round-button"
+      iconStart="@tui.image"
+      aria-label="Медиафайлы"
+      tuiHint="Медиафайлы"
+      tuiHintDirection="end"
+      (click)="goTo('/files')"
+    ></button>
+
+    <button
+      tuiButton
+      appearance="flat"
+      class="round-button"
+      iconStart="@tui.user-round"
+      aria-label="Вы"
+      tuiHint="Вы"
+      tuiHintDirection="end"
+      (click)="goTo('/me')"
+    ></button>
+  </div>
+</div>
