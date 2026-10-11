@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+
+  gap: 10px;
+
+  box-sizing: border-box;
+  width: clamp(336px, 30vw, 575px);
+  height: 100dvh;
+
+  border-right: 1px solid var(--tui-border-normal);
+  background-color: var(--tui-background-base);
+
+  @media (max-width: 1199px) {
+    width: 336px;
+  }
+
+  @media (max-width: 900px) {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    border-right: none;
+  }
+}

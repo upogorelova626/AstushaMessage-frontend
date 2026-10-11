@@ -4,7 +4,7 @@ import { TuiButton, TuiHintDirective, TuiHintDescribe } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [TuiButton, TuiHintDirective, TuiHintDescribe],
+  imports: [TuiButton, TuiHintDirective],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
