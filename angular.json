@@ -33,7 +33,8 @@
           "skipTests": true
         },
         "@schematics/angular:service": {
-          "skipTests": true
+          "skipTests": true,
+          "type": "service"
         }
       },
       "root": "",
@@ -89,6 +90,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 4205
+          },
           "configurations": {
             "production": {
               "buildTarget": "astusha-messenger:build:production"
