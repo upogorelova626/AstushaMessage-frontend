@@ -1,0 +1,90 @@
+:host {
+  display: flex;
+  flex: 1;
+
+  min-width: 0;
+  min-height: 0;
+}
+
+.wrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 24px;
+
+  background-color: var(--tui-background-neutral-1-hover);
+}
+
+.welcome-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 360px;
+  padding: 32px 24px 24px;
+
+  border-radius: 24px;
+  background-color: var(--tui-background-base);
+  text-align: center;
+
+  &__image {
+    width: 156px;
+    height: 132px;
+    margin-bottom: 24px;
+    object-fit: contain;
+  }
+
+  &__title {
+    margin: 0 0 12px;
+    font: var(--tui-typography-heading-h5);
+    color: var(--tui-text-primary);
+  }
+
+  &__description {
+    margin: 0 0 24px;
+    font: var(--tui-typography-body-s);
+    color: var(--tui-text-secondary);
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  width: 100%;
+  max-width: 380px;
+  margin-top: 32px;
+}
+
+.item {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  min-width: 0;
+  text-align: center;
+}
+
+.button-round {
+  --t-size: 48px;
+
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.description {
+  font: var(--tui-typography-body-xs);
+  color: var(--tui-text-primary);
+}

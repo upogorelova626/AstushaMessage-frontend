@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChatSearch } from '../chat-search/chat-search';
 import { ChatFilters } from '../chat-filters/chat-filters';
 import { Header } from '../header/header';
@@ -10,5 +10,6 @@ import { ArchivedChats } from '../archived-chats/archived-chats';
   imports: [ChatSearch, ChatFilters, Header, ClosedChats, ArchivedChats],
   templateUrl: './chat-list.html',
   styleUrl: './chat-list.less',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatList {}
