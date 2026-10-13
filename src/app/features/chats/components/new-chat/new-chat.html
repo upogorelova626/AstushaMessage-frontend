@@ -1,0 +1,15 @@
+<div class="wrapper">
+  <header class="header">
+    <h2 class="header__title">Новый чат</h2>
+
+    <button tuiButtonX type="button" aria-label="Закрыть" (click)="context.complete()"></button>
+  </header>
+
+  <main class="main">
+    <tui-textfield iconStart="@tui.search" tuiTextfieldSize="m">
+      <input tuiInput type="text" placeholder="Имя, фамилия, логин или email" />
+    </tui-textfield>
+
+    <button tuiButton type="button" iconStart="@tui.pencil" size="m">Начать чат</button>
+  </main>
+</div>
