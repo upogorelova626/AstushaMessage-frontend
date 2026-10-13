@@ -65,11 +65,14 @@
       tuiButton
       appearance="flat"
       class="round-button"
-      iconStart="@tui.user-round"
       aria-label="Вы"
       tuiHint="Вы"
       tuiHintDirection="end"
       (click)="goTo('/me')"
-    ></button>
+    >
+      @if (currentUser()?.avatarUrl) {
+        <img [src]="currentUser()?.avatarUrl" [alt]="currentUser()?.email" class="image" />
+      }
+    </button>
   </div>
 </div>

@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { TuiButton, TuiHintDirective, TuiHintDescribe } from '@taiga-ui/core';
+import { TuiButton, TuiHintDirective } from '@taiga-ui/core';
+import { CurrentUserService } from '../../../../shared/services/current-user.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,8 +13,13 @@ import { TuiButton, TuiHintDirective, TuiHintDescribe } from '@taiga-ui/core';
 })
 export class Sidebar {
   private readonly router = inject(Router);
+  private readonly currentUserService = inject(CurrentUserService);
 
   protected goTo(path: string): void {
     this.router.navigate([path]);
   }
+
+  protected readonly currentUser = toSignal(this.currentUserService.currentUser$, {
+    initialValue: null,
+  });
 }
