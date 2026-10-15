@@ -1,0 +1,29 @@
+<div class="search">
+  <tui-textfield iconStart="@tui.search" tuiChevron [stringify]="stringifyUser">
+    <input
+      #inputRef
+      tuiComboBox
+      placeholder="Имя, фамилия, логин или email"
+      [formControl]="searchControl"
+      [invalid]="isParentInvalid()"
+      (input)="onSearch(inputRef.value)"
+      (blur)="lossFocus()"
+    />
+
+    <tui-data-list-wrapper
+      *tuiDropdown
+      class="dropdown"
+      [items]="foundedUsers()"
+      [itemContent]="userContent"
+      [emptyContent]="
+        inputRef.value.trim().length < 2 ? 'Введите минимум 2 символа' : 'Ничего не найдено'
+      "
+    />
+  </tui-textfield>
+
+  <tui-error [formControl]="searchControl" />
+</div>
+
+<ng-template #userContent let-user>
+  <app-user-preview [user]="user" />
+</ng-template>

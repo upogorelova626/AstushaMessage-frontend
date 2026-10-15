@@ -6,9 +6,7 @@
   </header>
 
   <main class="main">
-    <tui-textfield iconStart="@tui.search" tuiTextfieldSize="m">
-      <input tuiInput type="text" placeholder="Имя, фамилия, логин или email" />
-    </tui-textfield>
+    <app-search-users [formControl]="userControl" />
 
     <button tuiButton type="button" iconStart="@tui.pencil" size="m">Начать чат</button>
   </main>
