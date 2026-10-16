@@ -8,6 +8,14 @@
   <main class="main">
     <app-search-users [formControl]="userControl" />
 
-    <button tuiButton type="button" iconStart="@tui.pencil" size="m">Начать чат</button>
+    <button
+      tuiButton
+      type="button"
+      [loading]="isCreating()"
+      [disabled]="userControl.invalid || isCreating()"
+      (click)="createChat()"
+    >
+      Начать чат
+    </button>
   </main>
 </div>
