@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { Sidebar } from '../../components/sidebar/sidebar';
 import { ChatList } from '../../components/chat-list/chat-list';
 import { ChatEmptyState } from '../../components/chat-empty-state/chat-empty-state';
 import { SideBarService } from '../../../../shared/drawer/sidebar.service';
 import { SidebarHost } from '../../../../shared/drawer/sidebar-host';
 import { CurrentUserService } from '../../../../shared/services/current-user.service';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-chats-page',
-  imports: [Sidebar, ChatList, ChatEmptyState, SidebarHost],
+  imports: [ChatList, SidebarHost, RouterOutlet],
   templateUrl: './chats-page.html',
   styleUrl: './chats-page.less',
   changeDetection: ChangeDetectionStrategy.OnPush,

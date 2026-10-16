@@ -1,8 +1,11 @@
 <div class="wrapper">
   <div class="left">
-    <app-sidebar />
-    <app-chat-list />
+    <app-chat-list class="left" />
   </div>
-  <app-chat-empty-state />
+
+  <div class="right">
+    <router-outlet />
+  </div>
+
   <app-sidebar-host />
 </div>

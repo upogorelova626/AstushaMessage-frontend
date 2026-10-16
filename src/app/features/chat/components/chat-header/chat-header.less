@@ -1,0 +1,74 @@
+:host {
+  display: block;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 64px;
+  padding: 10px 16px;
+
+  background-color: var(--tui-background-base);
+}
+
+.user-info {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 15px;
+
+  min-width: 0;
+}
+
+.data {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.username {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font: var(--tui-typography-body-m);
+}
+
+.status {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font: var(--tui-typography-body-xs);
+  color: var(--tui-text-secondary);
+}
+
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.button-round,
+.avatar {
+  --t-size: 40px;
+
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+
+  border-radius: 50%;
+}
