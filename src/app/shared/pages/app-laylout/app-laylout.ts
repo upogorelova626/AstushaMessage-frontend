@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Sidebar } from '../../../features/chats/components/sidebar/sidebar';
+import { CurrentUserService } from '../../services/current-user.service';
 
 @Component({
   selector: 'app-app-laylout',
@@ -8,4 +9,13 @@ import { Sidebar } from '../../../features/chats/components/sidebar/sidebar';
   templateUrl: './app-laylout.html',
   styleUrl: './app-laylout.less',
 })
-export class AppLaylout {}
+export class AppLaylout implements OnInit {
+  private readonly currentUserService = inject(CurrentUserService);
+  protected readonly isLoading = signal<boolean>(false);
+
+  ngOnInit(): void {
+    this.isLoading.set(true);
+
+    this.currentUserService.getMe().subscribe();
+  }
+}

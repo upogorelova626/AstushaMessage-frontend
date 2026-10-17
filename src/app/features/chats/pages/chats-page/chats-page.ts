@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { ChatList } from '../../components/chat-list/chat-list';
-import { ChatEmptyState } from '../../components/chat-empty-state/chat-empty-state';
 import { SideBarService } from '../../../../shared/drawer/sidebar.service';
 import { SidebarHost } from '../../../../shared/drawer/sidebar-host';
-import { CurrentUserService } from '../../../../shared/services/current-user.service';
 import { RouterOutlet } from '@angular/router';
+import { ChatService } from '../../../../shared/services/chat.service';
+import { ChatsStoreService } from '../../services/chats-store.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-chats-page',
@@ -15,9 +16,19 @@ import { RouterOutlet } from '@angular/router';
   providers: [SideBarService],
 })
 export class ChatsPage implements OnInit {
-  private readonly currentUserService = inject(CurrentUserService);
+  private readonly chatsService = inject(ChatService);
+  private readonly chatsStoreService = inject(ChatsStoreService);
+
+  protected readonly isLoading = signal<boolean>(false);
 
   ngOnInit() {
-    this.currentUserService.getMe().subscribe();
+    this.isLoading.set(true);
+
+    this.chatsService
+      .getAllChats()
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe((chats) => {
+        this.chatsStoreService.chats.set(chats);
+      });
   }
 }

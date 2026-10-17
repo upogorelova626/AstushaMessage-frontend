@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Chat, CreateChat } from '../interfaces';
+import { Chat, CreateChat, GetChatRequest } from '../interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,6 +13,18 @@ export class ChatService {
 
   createChat(payload: CreateChat): Observable<Chat> {
     return this.http.post<Chat>(`${this.astushaMessageApiUrl}/chats`, payload, {
+      withCredentials: true,
+    });
+  }
+
+  getAllChats(): Observable<Chat[]> {
+    return this.http.get<Chat[]>(`${this.astushaMessageApiUrl}/chats`, {
+      withCredentials: true,
+    });
+  }
+
+  getChat(chatId: string): Observable<Chat> {
+    return this.http.get<Chat>(`${this.astushaMessageApiUrl}/chats/${chatId}`, {
       withCredentials: true,
     });
   }

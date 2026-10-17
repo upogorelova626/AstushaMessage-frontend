@@ -4,4 +4,10 @@
   <app-chat-filters />
   <app-closed-chats />
   <app-archived-chats />
+
+  <div class="chat-items">
+    @for (chat of chats(); track chat.id) {
+      <app-chat-item [chat]="chat" />
+    }
+  </div>
 </div>
