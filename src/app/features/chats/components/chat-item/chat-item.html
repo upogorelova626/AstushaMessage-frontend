@@ -1,1 +1,14 @@
-<button tuiButton appearance="flat" class="chat-item" (click)="openChat(chat().id)"></button>
+<button tuiButton appearance="flat" class="chat-item" (click)="openChat(chat().id)">
+  <div [tuiAvatar]="chatAvatar()" class="avatar"></div>
+
+  <div class="content">
+    <div class="name">{{ chatTitle() }}</div>
+
+    <div class="message-preview">
+      <tui-icon class="read-status" icon="@tui.check-check" />
+      <div class="last-message">Что то тут написано это последнее сообщение</div>
+    </div>
+  </div>
+
+  <div class="meta">11:20</div>
+</button>
