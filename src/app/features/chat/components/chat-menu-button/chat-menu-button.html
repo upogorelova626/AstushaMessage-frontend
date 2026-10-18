@@ -1,0 +1,62 @@
+<button
+  type="button"
+  class="button-round"
+  tuiButton
+  appearance="flat"
+  iconStart="@tui.ellipsis-vertical"
+  tuiHint="Меню"
+  [attr.aria-expanded]="open()"
+  [tuiDropdown]="dropdownContent"
+  [tuiDropdownManual]="open()"
+  [tuiObscuredEnabled]="open()"
+  [tuiDropdownAlign]="'end'"
+  (click)="onClick()"
+  (tuiActiveZoneChange)="onActiveZone($event)"
+  (tuiObscured)="onObscured($event)"
+>
+  <ng-template #dropdownContent>
+    <tui-data-list size="s">
+      <tui-opt-group>
+        @for (action of actionsFirst; track action.title) {
+          <button
+            class="button"
+            tuiOption
+            type="button"
+            size="xs"
+            (click)="onSelect(action)"
+            [iconStart]="action.iconStart"
+            [iconEnd]="action.iconEnd"
+          >
+            {{ action.title }}
+          </button>
+        }
+      </tui-opt-group>
+
+      <hr />
+
+      <tui-opt-group>
+        @for (action of actionsSecond; track action.title) {
+          <button
+            class="button"
+            tuiOption
+            type="button"
+            (click)="onSelect(action)"
+            [iconStart]="action.iconStart"
+          >
+            {{ action.title }}
+          </button>
+        }
+      </tui-opt-group>
+
+      <hr />
+
+      <tui-opt-group>
+        @for (action of actionsThird; track action.title) {
+          <button tuiOption type="button" (click)="onSelect(action)" [iconStart]="action.iconStart">
+            {{ action.title }}
+          </button>
+        }
+      </tui-opt-group>
+    </tui-data-list>
+  </ng-template>
+</button>
