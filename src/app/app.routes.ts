@@ -27,6 +27,13 @@ export const routes: Routes = [
             loadComponent: () =>
               import('./features/chat/pages/chat-page/chat-page').then((m) => m.ChatPage),
           },
+          {
+            path: ':chatId/search',
+            loadComponent: () =>
+              import('./features/chat/pages/search-chat-message-page/search-chat-message-page').then(
+                (m) => m.SearchChatMessagePage,
+              ),
+          },
         ],
       },
     ],

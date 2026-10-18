@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ChatHeader } from '../../components/chat-header/chat-header';
-import { ChatMessages } from '../../components/chat-messages/chat-messages';
-import { MessageInput } from '../../components/message-input/message-input';
+import { ChatHeader } from '../../components/chat-components/chat-header/chat-header';
+import { ChatMessages } from '../../components/chat-components/chat-messages/chat-messages';
+import { MessageInput } from '../../components/chat-components/message-input/message-input';
 
 @Component({
   selector: 'app-chat-page',
