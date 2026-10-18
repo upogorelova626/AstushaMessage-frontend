@@ -52,7 +52,13 @@
 
       <tui-opt-group>
         @for (action of actionsThird; track action.title) {
-          <button tuiOption type="button" (click)="onSelect(action)" [iconStart]="action.iconStart">
+          <button
+            tuiOption
+            type="button"
+            tuiAppearance="flat-destructive"
+            (click)="onSelect(action)"
+            [iconStart]="action.iconStart"
+          >
             {{ action.title }}
           </button>
         }

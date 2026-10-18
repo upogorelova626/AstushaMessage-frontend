@@ -1,9 +1,16 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TuiActiveZone } from '@taiga-ui/cdk/directives/active-zone';
 import { TuiObscured } from '@taiga-ui/cdk/directives/obscured';
-import { TuiButton, TuiHint, TuiDataList, TuiDropdown, TuiOption } from '@taiga-ui/core';
+import {
+  TuiButton,
+  TuiHint,
+  TuiDataList,
+  TuiDropdown,
+  TuiOption,
+  TuiAppearance,
+} from '@taiga-ui/core';
 
-interface ExampleAction {
+interface Action {
   readonly title: string;
   readonly iconStart: string;
   readonly iconEnd?: string;
@@ -11,13 +18,22 @@ interface ExampleAction {
 
 @Component({
   selector: 'app-chat-menu-button',
-  imports: [TuiButton, TuiHint, TuiDataList, TuiDropdown, TuiObscured, TuiActiveZone, TuiOption],
+  imports: [
+    TuiButton,
+    TuiHint,
+    TuiDataList,
+    TuiDropdown,
+    TuiObscured,
+    TuiActiveZone,
+    TuiOption,
+    TuiAppearance,
+  ],
   templateUrl: './chat-menu-button.html',
   styleUrl: './chat-menu-button.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatMenuButton {
-  protected readonly actionsFirst: readonly ExampleAction[] = [
+  protected readonly actionsFirst: readonly Action[] = [
     {
       title: 'Данные контакта',
       iconStart: '@tui.info',
@@ -62,12 +78,12 @@ export class ChatMenuButton {
     },
   ];
 
-  protected readonly actionsSecond: readonly ExampleAction[] = [
+  protected readonly actionsSecond: readonly Action[] = [
     { title: 'Отправить ссылку на звонок', iconStart: '@tui.link-2' },
     { title: 'Новый групповой звонок', iconStart: '@tui.user-round-plus' },
   ];
 
-  protected readonly actionsThird: readonly ExampleAction[] = [
+  protected readonly actionsThird: readonly Action[] = [
     { title: 'Пожаловаться', iconStart: '@tui.thumbs-down' },
     { title: 'Заблокировать', iconStart: '@tui.ban' },
     { title: 'Очистить чат', iconStart: '@tui.circle-minus' },
@@ -75,7 +91,7 @@ export class ChatMenuButton {
   ];
 
   protected readonly open = signal(false);
-  protected readonly selected = signal<ExampleAction | null>(null);
+  protected readonly selected = signal<Action | null>(null);
 
   protected onClick(): void {
     this.open.update((open) => !open);
@@ -93,7 +109,7 @@ export class ChatMenuButton {
     }
   }
 
-  protected onSelect(action: ExampleAction): void {
+  protected onSelect(action: Action): void {
     this.selected.set(action);
     this.open.set(false);
   }

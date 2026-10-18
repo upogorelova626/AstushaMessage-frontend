@@ -1,0 +1,32 @@
+<button
+  type="button"
+  tuiButton
+  iconStart="@tui.paperclip"
+  appearance="flat"
+  class="round-button"
+  tuiHint="Прикрепить"
+  [attr.aria-expanded]="open()"
+  [tuiDropdown]="dropdownContent"
+  [tuiDropdownManual]="open()"
+  [tuiObscuredEnabled]="open()"
+  (click)="onClick()"
+  (tuiActiveZoneChange)="onActiveZone($event)"
+  (tuiObscured)="onObscured($event)"
+>
+  <ng-template #dropdownContent>
+    <tui-data-list>
+      @for (action of actions; track action.title) {
+        <button
+          class="button"
+          tuiOption
+          type="button"
+          size="xs"
+          (click)="onSelect(action)"
+          [iconStart]="action.iconStart"
+        >
+          {{ action.title }}
+        </button>
+      }
+    </tui-data-list>
+  </ng-template>
+</button>
