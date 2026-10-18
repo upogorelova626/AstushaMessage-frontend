@@ -1,29 +1,9 @@
-<div class="wrapper">
-  <div class="messages-list">
-    @for (message of MOCK_MESSAGES; track message.id) {
-      <div
-        tuiMessage
-        class="message"
-        [class.message_outgoing]="message.isMine"
-        [class.message_incoming]="!message.isMine"
-      >
-        <div class="message__text">
-          {{ message.text }}
-        </div>
-
-        <div class="message__meta">
-          <span class="message__time">
-            {{ message.createdAt | date: 'HH:mm' }}
-          </span>
-
-          @if (message.isMine) {
-            <tui-icon
-              class="message__read-status"
-              [icon]="message.isRead ? '@tui.check-check' : '@tui.check'"
-            />
-          }
-        </div>
-      </div>
-    }
+<tui-scrollbar>
+  <div class="wrapper">
+    <div class="messages-list">
+      @for (message of MOCK_MESSAGES; track message.id) {
+        <app-message [message]="message" />
+      }
+    </div>
   </div>
-</div>
+</tui-scrollbar>

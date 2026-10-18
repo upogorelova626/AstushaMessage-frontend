@@ -1,7 +1,6 @@
-import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TuiIcon } from '@taiga-ui/core';
-import { TuiMessage } from '@taiga-ui/kit';
+import { TuiScrollbar } from '@taiga-ui/core';
+import { Message } from '../message/message';
 
 export interface ChatMessage {
   id: string;
@@ -13,7 +12,7 @@ export interface ChatMessage {
 
 @Component({
   selector: 'app-chat-messages',
-  imports: [TuiMessage, TuiIcon, DatePipe],
+  imports: [TuiScrollbar, Message],
   templateUrl: './chat-messages.html',
   styleUrl: './chat-messages.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -89,20 +88,6 @@ export class ChatMessages {
       createdAt: '2026-10-16T09:25:00',
       isMine: false,
       isRead: true,
-    },
-    {
-      id: '11',
-      text: 'Кстати, завтра покажу, как всё выглядит!',
-      createdAt: '2026-10-16T21:45:00',
-      isMine: true,
-      isRead: false,
-    },
-    {
-      id: '12',
-      text: 'Обязательно оцени интерфейс, я очень старался!',
-      createdAt: '2026-10-16T21:46:00',
-      isMine: true,
-      isRead: false,
     },
   ];
 }

@@ -1,0 +1,32 @@
+<div class="wrapper">
+  <div class="buttons">
+    <button
+      type="button"
+      tuiButton
+      iconStart="@tui.paperclip"
+      appearance="flat"
+      class="round-button"
+    ></button>
+    <button
+      type="button"
+      tuiButton
+      iconStart="@tui.sticker"
+      appearance="flat"
+      class="round-button"
+    ></button>
+  </div>
+
+  <div class="message-field">
+    <tui-textfield>
+      <textarea tuiTextarea placeholder="Введите сообщение" [maxRows]="8"></textarea>
+
+      <button
+        tuiButton
+        type="button"
+        appearance="primary"
+        iconStart="@tui.send"
+        class="round-button"
+      ></button>
+    </tui-textfield>
+  </div>
+</div>
