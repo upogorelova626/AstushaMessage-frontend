@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TuiButton, TuiButtonX } from '@taiga-ui/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-header',
@@ -8,4 +9,17 @@ import { TuiButton, TuiButtonX } from '@taiga-ui/core';
   styleUrl: './search-header.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchHeader {}
+export class SearchHeader {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+
+  protected closeSearchPage(): void {
+    const chatId = this.route.snapshot.paramMap.get('chatId');
+
+    if (!chatId) {
+      return;
+    }
+
+    void this.router.navigate(['/chats', chatId]);
+  }
+}

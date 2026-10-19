@@ -1,9 +1,9 @@
 <div class="wrapper">
   <div class="user-info">
-    <div tuiAvatar class="avatar" tuiHint="Сведения профиля"></div>
+    <div [tuiAvatar]="chatAvatar()" class="avatar"></div>
 
     <div class="data">
-      <div class="username">Мамочка</div>
+      <div class="username" [tuiSkeleton]="isChatLoading()">{{ chatTitle() }}</div>
       <div class="status">В сети</div>
     </div>
   </div>

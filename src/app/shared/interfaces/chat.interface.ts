@@ -12,7 +12,10 @@ export interface ChatUser {
 }
 
 export interface ChatParticipant {
+  chatId: string;
   userId: string;
+  joinedAt: string;
+  lastReadAt: string;
   user: ChatUser | null;
 }
 
