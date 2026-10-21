@@ -1,0 +1,48 @@
+<button
+  tuiButton
+  tuiChevron
+  type="button"
+  [attr.aria-expanded]="open()"
+  [tuiDropdown]="dropdownContent"
+  [tuiDropdownManual]="open()"
+  [tuiObscuredEnabled]="open()"
+  (click)="onClick($event)"
+  (tuiObscured)="onObscured($event)"
+  size="xs"
+  appearance="flat"
+  class="button"
+>
+  <ng-template #dropdownContent>
+    <tui-data-list size="m">
+      <tui-opt-group>
+        @for (action of actionsFirst; track action.title) {
+          <button
+            class="button"
+            tuiOption
+            type="button"
+            (click)="onSelect(action)"
+            [iconStart]="action.iconStart"
+          >
+            {{ action.title }}
+          </button>
+        }
+      </tui-opt-group>
+
+      <hr />
+
+      <tui-opt-group>
+        @for (action of actionsSecond; track action.title) {
+          <button
+            tuiOption
+            type="button"
+            tuiAppearance="flat-destructive"
+            (click)="onSelect(action)"
+            [iconStart]="action.iconStart"
+          >
+            {{ action.title }}
+          </button>
+        }
+      </tui-opt-group>
+    </tui-data-list>
+  </ng-template>
+</button>

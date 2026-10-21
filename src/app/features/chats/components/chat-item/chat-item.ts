@@ -6,10 +6,11 @@ import { TuiAvatar } from '@taiga-ui/kit';
 
 import { Chat, ChatType } from '../../../../shared/interfaces';
 import { CurrentUserService } from '../../../../shared/services/current-user.service';
+import { ChatActionsButton } from '../chat-actions-button/chat-actions-button';
 
 @Component({
   selector: 'app-chat-item',
-  imports: [TuiButton, TuiAvatar, TuiIcon],
+  imports: [TuiButton, TuiAvatar, TuiIcon, ChatActionsButton],
   templateUrl: './chat-item.html',
   styleUrl: './chat-item.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
