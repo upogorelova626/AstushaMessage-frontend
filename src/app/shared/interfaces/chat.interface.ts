@@ -12,11 +12,18 @@ export interface ChatUser {
 }
 
 export interface ChatParticipant {
-  chatId: string;
   userId: string;
-  joinedAt: string;
-  lastReadAt: string;
   user: ChatUser | null;
+}
+
+export interface ChatSettings {
+  isArchived: boolean;
+  isPinned: boolean;
+  isFavorite: boolean;
+  isMuted: boolean;
+  mutedUntil: string | null;
+  isMarkedUnread: boolean;
+  lastReadAt: string | null;
 }
 
 export interface CreateChat {
@@ -34,4 +41,5 @@ export interface Chat {
   createdAt: string;
   updatedAt: string;
   participants: ChatParticipant[];
+  settings: ChatSettings;
 }

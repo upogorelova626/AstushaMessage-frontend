@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { TuiObscured } from '@taiga-ui/cdk/directives/obscured';
 import { TuiButton, TuiDataList, TuiDropdown, TuiOptGroup, TuiOption } from '@taiga-ui/core';
 import { TuiChevron } from '@taiga-ui/kit';
+
 import { ActionsWithChatService } from '../../../chat/services/actions-with-chat.service';
+import { Chat } from '../../../../shared/interfaces';
 
 interface Action {
   readonly title: string;
@@ -23,34 +25,48 @@ interface Action {
 export class ChatActionsButton {
   private readonly actionsWithChatService = inject(ActionsWithChatService);
 
-  protected readonly actionsFirst: readonly Action[] = [
+  readonly chat = input.required<Chat>();
+
+  protected readonly open = signal(false);
+
+  protected readonly actionsFirst = computed<readonly Action[]>(() => [
     {
-      title: 'Архивировать чат',
+      title: this.chat().settings.isArchived ? 'Разархивировать чат' : 'Архивировать чат',
       iconStart: '@tui.archive',
-      action: () => {},
+      action: () => {
+        this.actionsWithChatService.archiveChat(this.chat().id, !this.chat().settings.isArchived);
+      },
     },
     {
-      title: 'Без звука',
-      iconStart: '@tui.bell-off',
+      title: this.chat().settings.isMuted ? 'Включить звук' : 'Без звука',
+      iconStart: this.chat().settings.isMuted ? '@tui.bell' : '@tui.bell-off',
       action: () => {
         this.actionsWithChatService.turnOffSound();
       },
     },
     {
-      title: 'Закрепить чат',
+      title: this.chat().settings.isPinned ? 'Открепить чат' : 'Закрепить чат',
       iconStart: '@tui.pin',
-      action: () => {},
+      action: () => {
+        this.actionsWithChatService.pinChat(this.chat().id, !this.chat().settings.isPinned);
+      },
     },
     {
-      title: 'Пометить как непрочитанное',
+      title: this.chat().settings.isMarkedUnread
+        ? 'Пометить как прочитанное'
+        : 'Пометить как непрочитанное',
       iconStart: '@tui.message-square-text',
       action: () => {},
     },
     {
-      title: 'Удалить из избранного',
-      iconStart: '@tui.heart-off',
+      title: this.chat().settings.isFavorite ? 'Удалить из избранного' : 'Добавить в избранное',
+      iconStart: this.chat().settings.isFavorite ? '@tui.heart-off' : '@tui.heart',
       action: () => {
-        this.actionsWithChatService.deleteFromFavourites();
+        this.actionsWithChatService.changeFavorite({
+          chatIsOpen: false,
+          chatId: this.chat().id,
+          isFavorite: !this.chat().settings.isFavorite,
+        });
       },
     },
     {
@@ -60,7 +76,7 @@ export class ChatActionsButton {
         this.actionsWithChatService.changeList();
       },
     },
-  ];
+  ]);
 
   protected readonly actionsSecond: readonly Action[] = [
     {
@@ -86,10 +102,6 @@ export class ChatActionsButton {
     },
   ];
 
-  protected readonly open = signal(false);
-  protected readonly selected = signal<Action | null>(null);
-  protected readonly buttonLabel = computed(() => this.selected()?.title ?? 'Choose');
-
   protected onClick(event: Event): void {
     event.stopPropagation();
     this.open.update((open) => !open);
@@ -102,7 +114,6 @@ export class ChatActionsButton {
   }
 
   protected onSelect(action: Action): void {
-    this.selected.set(action);
     this.open.set(false);
     action.action?.();
   }

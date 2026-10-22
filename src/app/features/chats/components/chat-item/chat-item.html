@@ -12,6 +12,15 @@
 
   <div class="meta-containers">
     <div class="meta">11:20</div>
-    <app-chat-actions-button class="actions-button" />
+
+    <div class="met">
+      @if (chat().settings.isPinned) {
+        <tui-icon icon="@tui.pin" class="icon" />
+        <app-chat-actions-button class="actions-button" [chat]="chat()" />
+
+      } @else {
+        <app-chat-actions-button class="actions-button" [chat]="chat()" />
+      }
+    </div>
   </div>
 </button>

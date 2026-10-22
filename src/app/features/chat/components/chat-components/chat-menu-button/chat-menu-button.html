@@ -17,7 +17,7 @@
   <ng-template #dropdownContent>
     <tui-data-list size="s">
       <tui-opt-group>
-        @for (action of actionsFirst; track action.title) {
+        @for (action of actionsFirst(); track action.title) {
           <button
             class="button"
             tuiOption

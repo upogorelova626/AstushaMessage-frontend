@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { TuiActiveZone } from '@taiga-ui/cdk/directives/active-zone';
 import { TuiObscured } from '@taiga-ui/cdk/directives/obscured';
 import {
@@ -17,6 +17,11 @@ interface Action {
   readonly iconStart: string;
   readonly iconEnd?: string;
   readonly action?: () => void;
+}
+
+interface EditChatParametrs {
+  chatIsOpen: boolean;
+  chatId?: string;
 }
 
 @Component({
@@ -39,9 +44,9 @@ export class ChatMenuButton {
   private readonly openedChatService = inject(OpenedChatService);
   private readonly actionsWithChat = inject(ActionsWithChatService);
 
-  private readonly chat = this.openedChatService.chat();
+  private readonly chat = this.openedChatService.chat;
 
-  protected readonly actionsFirst: readonly Action[] = [
+  protected readonly actionsFirst = computed<readonly Action[]>(() => [
     {
       title: 'Данные контакта',
       iconStart: '@tui.info',
@@ -50,67 +55,56 @@ export class ChatMenuButton {
     {
       title: 'Поиск',
       iconStart: '@tui.search',
-      action: () => {
-        this.actionsWithChat.openSearchMessageInChatPage();
-      },
+      action: () => this.actionsWithChat.openSearchMessageInChatPage(),
     },
     {
       title: 'Выбрать сообщения',
       iconStart: '@tui.square-check',
-      action: () => {
-        this.actionsWithChat.selectChatMessages();
-      },
+      action: () => this.actionsWithChat.selectChatMessages(),
     },
     {
-      title: 'Без звука',
-      iconStart: '@tui.bell-off',
-      iconEnd: '@tui.chevron-right',
-      action: () => {
-        this.actionsWithChat.turnOffSound();
-      },
+      title: this.chat()!.settings.isMuted ? 'Включить звук' : 'Без звука',
+      iconStart: this.chat()!.settings.isMuted ? '@tui.bell' : '@tui.bell-off',
+      iconEnd: this.chat()!.settings.isMuted ? undefined : '@tui.chevron-right',
+      action: () => this.actionsWithChat.turnOffSound(),
     },
     {
       title: 'Исчезающие сообщения',
       iconStart: '@tui.clock-fading',
-      action: () => {
-        this.actionsWithChat.turnOffDisappearingMessages();
-      },
+      action: () => this.actionsWithChat.turnOffDisappearingMessages(),
     },
     {
       title: 'Тема чата',
       iconStart: '@tui.palette',
-      action: () => {
-        this.actionsWithChat.openChatThemesPage();
-      },
+      action: () => this.actionsWithChat.openChatThemesPage(),
     },
     {
-      title: 'Удалить из Избранного',
-      iconStart: '@tui.heart-off',
+      title: this.chat()!.settings.isFavorite ? 'Удалить из избранного' : 'Добавить в избранное',
+      iconStart: this.chat()!.settings.isFavorite ? '@tui.heart-off' : '@tui.heart',
       action: () => {
-        this.actionsWithChat.deleteFromFavourites();
+        this.actionsWithChat.changeFavorite({
+          chatIsOpen: true,
+          isFavorite: !this.chat()!.settings.isFavorite,
+        });
       },
     },
     {
       title: 'Изменить список',
       iconStart: '@tui.images',
       iconEnd: '@tui.chevron-right',
-      action: () => {
-        this.actionsWithChat.changeList();
-      },
+      action: () => this.actionsWithChat.changeList(),
     },
     {
       title: 'Экспорт чата',
       iconStart: '@tui.download',
-      action: () => {
-        this.actionsWithChat.exportChat();
-      },
+      action: () => this.actionsWithChat.exportChat(),
     },
     {
       title: 'Закрыть окно чата',
       iconStart: '@tui.circle-x',
       action: () => this.actionsWithChat.closeChat(),
     },
-  ];
+  ]);
 
   protected readonly actionsSecond: readonly Action[] = [
     {
