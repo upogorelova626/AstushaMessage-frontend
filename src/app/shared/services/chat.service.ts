@@ -12,20 +12,14 @@ export class ChatService {
   private readonly astushaMessengerApiUrl = 'http://localhost:3005';
 
   createChat(payload: CreateChat): Observable<Chat> {
-    return this.http.post<Chat>(`${this.astushaMessengerApiUrl}/chats`, payload, {
-      withCredentials: true,
-    });
+    return this.http.post<Chat>(`${this.astushaMessengerApiUrl}/chats`, payload);
   }
 
   getAllChats(): Observable<Chat[]> {
-    return this.http.get<Chat[]>(`${this.astushaMessengerApiUrl}/chats`, {
-      withCredentials: true,
-    });
+    return this.http.get<Chat[]>(`${this.astushaMessengerApiUrl}/chats`);
   }
 
   getChat(chatId: string): Observable<Chat> {
-    return this.http.get<Chat>(`${this.astushaMessengerApiUrl}/chats/${chatId}`, {
-      withCredentials: true,
-    });
+    return this.http.get<Chat>(`${this.astushaMessengerApiUrl}/chats/${chatId}`);
   }
 }

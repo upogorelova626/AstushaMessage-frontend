@@ -17,9 +17,7 @@ export class CurrentUserService {
 
   getMe(): Observable<AstushaUser> {
     return this.http
-      .get<AstushaUser>(`${this.astushaIdApiUrl}/users/me`, {
-        withCredentials: true,
-      })
+      .get<AstushaUser>(`${this.astushaIdApiUrl}/users/me`)
       .pipe(tap((user) => this.currentUser.next(user)));
   }
 }

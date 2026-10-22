@@ -21,7 +21,6 @@ export class ChatSettingsService {
     return this.http.patch<Chat>(
       `${this.astushaMessengerApiUrl}/chat-settings/${chatId}/archive`,
       payload,
-      { withCredentials: true },
     );
   }
 
@@ -29,7 +28,6 @@ export class ChatSettingsService {
     return this.http.patch<Chat>(
       `${this.astushaMessengerApiUrl}/chat-settings/${chatId}/pin`,
       payload,
-      { withCredentials: true },
     );
   }
 
@@ -37,7 +35,6 @@ export class ChatSettingsService {
     return this.http.patch<Chat>(
       `${this.astushaMessengerApiUrl}/chat-settings/${chatId}/favorite`,
       payload,
-      { withCredentials: true },
     );
   }
 
@@ -45,7 +42,6 @@ export class ChatSettingsService {
     return this.http.patch<Chat>(
       `${this.astushaMessengerApiUrl}/chat-settings/${chatId}/mute`,
       payload,
-      { withCredentials: true },
     );
   }
 }

@@ -12,10 +12,6 @@ export class SearchUserService {
   private readonly astushaIdApiUrl = 'http://localhost:3002';
 
   findUser(query: string): Observable<AstushaUserPreview[]> {
-    return this.http.post<AstushaUserPreview[]>(
-      `${this.astushaIdApiUrl}/users/search`,
-      { query },
-      { withCredentials: true },
-    );
+    return this.http.post<AstushaUserPreview[]>(`${this.astushaIdApiUrl}/users/search`, { query });
   }
 }

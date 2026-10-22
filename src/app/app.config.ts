@@ -3,13 +3,14 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { cookieInterceptor } from './shared/interceptors/credentials.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideTaiga(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([cookieInterceptor])),
   ],
 };
