@@ -1,4 +1,5 @@
 import { computed, inject, Injectable, Type } from '@angular/core';
+import { Router } from '@angular/router';
 import { TuiDialogService, TuiNotificationService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { catchError, EMPTY, tap } from 'rxjs';
@@ -7,6 +8,7 @@ import { OpenedChatService } from './opened-chat.service';
 import { ChatsStoreService } from '../../chats/services/chats-store.service';
 import { ChatManagementService } from '../../../shared/services/chat-management.service';
 import { ClearChatConfirmationDialog } from '../../../shared/components/clear-chat-confirmation-dialog/clear-chat-confirmation-dialog';
+import { DeleteChatConfirmationDialog } from '../../../shared/components/delete-chat-confirmation-dialog/delete-chat-confirmation-dialog';
 
 export interface CleanOrDeleteChatParametrs {
   chatIsOpen: boolean;
@@ -24,23 +26,30 @@ export class ChatRemovalService {
 
   private readonly dialogs = inject(TuiDialogService);
   private readonly alerts = inject(TuiNotificationService);
+  private readonly router = inject(Router);
 
   private readonly chatId = computed(() => this.openedChatService.chat()?.id);
 
   cleanChat(params: CleanOrDeleteChatParametrs): void {
-    this.openDialog(ClearChatConfirmationDialog, params);
+    this.openDialog(ClearChatConfirmationDialog, params, false);
   }
 
-  deleteChat() {}
+  deleteChat(params: CleanOrDeleteChatParametrs): void {
+    this.openDialog(DeleteChatConfirmationDialog, params, true);
+  }
 
-  private openDialog(component: Type<unknown>, params: CleanOrDeleteChatParametrs): void {
+  private openDialog(
+    component: Type<unknown>,
+    params: CleanOrDeleteChatParametrs,
+    isDeleting: boolean,
+  ): void {
     const chatId = params.chatIsOpen ? this.chatId() : params.chatId;
+
+    const chatTitle = params.chatIsOpen ? this.openedChatService.chatTitle() : params.chatTitle;
 
     if (!chatId) {
       return;
     }
-
-    const chatTitle = params.chatIsOpen ? this.openedChatService.chatTitle() : params.chatTitle;
 
     this.dialogs
       .open<boolean>(new PolymorpheusComponent(component), {
@@ -56,20 +65,30 @@ export class ChatRemovalService {
           return;
         }
 
-        this.chatManagementService
-          .clearChat(chatId)
+        const request$ = isDeleting
+          ? this.chatManagementService.deleteChat(chatId)
+          : this.chatManagementService.clearChat(chatId);
+
+        request$
           .pipe(
             tap(() => {
-              this.openPositiveAlert('Чат очищен');
+              this.openPositiveAlert(isDeleting ? 'Чат удалён' : 'Чат очищен');
             }),
             catchError(() => {
-              this.openNegativeAlert('Не удалось очистить чат');
+              this.openNegativeAlert(
+                isDeleting ? 'Не удалось удалить чат' : 'Не удалось очистить чат',
+              );
 
               return EMPTY;
             }),
           )
           .subscribe(() => {
             this.chatsStoreService.getAllChats();
+
+            if (isDeleting && this.chatId() === chatId) {
+              this.openedChatService.clearChat();
+              void this.router.navigate(['/chats']);
+            }
           });
       });
   }

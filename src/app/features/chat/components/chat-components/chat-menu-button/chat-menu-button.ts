@@ -151,7 +151,7 @@ export class ChatMenuButton {
       title: 'Удалить чат',
       iconStart: '@tui.trash',
       action: () => {
-        this.chatRemovalService.deleteChat();
+        this.chatRemovalService.deleteChat({ chatIsOpen: true });
       },
     },
   ];

@@ -120,7 +120,11 @@ export class ChatActionsButton {
       title: 'Удалить чат',
       iconStart: '@tui.trash',
       action: () => {
-        this.chatRemovalService.deleteChat();
+        this.chatRemovalService.deleteChat({
+          chatIsOpen: false,
+          chatId: this.chat().id,
+          chatTitle: this.chatTitle(),
+        });
       },
     },
   ];

@@ -1,1 +1,18 @@
-<p>delete-chat-confirmation-dialog works!</p>
+<div class="wrapper">
+  <div class="title">Удалить чат с контактом {{ chatTitle }}?</div>
+  <div class="description">Сообщения будут удалены со всех устройств.</div>
+
+  <div class="actions">
+    <button
+      tuiButton
+      type="button"
+      size="m"
+      appearance="outline-destructive"
+      (click)="deleteChat()"
+    >
+      Удалить
+    </button>
+
+    <button tuiButton type="button" size="m" appearance="flat" (click)="cancel()">Отмена</button>
+  </div>
+</div>
