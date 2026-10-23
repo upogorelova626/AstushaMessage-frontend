@@ -16,10 +16,8 @@
     <div class="met">
       @if (chat().settings.isPinned) {
         <tui-icon icon="@tui.pin" class="icon" />
-        <app-chat-actions-button class="actions-button" [chat]="chat()" />
-
       } @else {
-        <app-chat-actions-button class="actions-button" [chat]="chat()" />
+        <app-chat-actions-button class="actions-button" [chat]="chat()" [chatTitle]="chatTitle()" />
       }
     </div>
   </div>

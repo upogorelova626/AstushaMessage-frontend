@@ -1,0 +1,18 @@
+<div class="wrapper">
+  <div class="title">Очистить чат с {{ chatTitle }}?</div>
+
+  <div class="description">Этот чат будет очищен, но останется в списке ваших чатов.</div>
+
+  <label class="favorite-messages">
+    <span class="favorite-label">Сохранить избранные сообщения</span>
+    <input type="checkbox" tuiSwitch />
+  </label>
+
+  <div class="actions">
+    <button tuiButton type="button" size="m" appearance="outline-destructive" (click)="cleanChat()">
+      Очистить чат
+    </button>
+
+    <button tuiButton type="button" size="m" appearance="flat" (click)="cancel()">Отмена</button>
+  </div>
+</div>

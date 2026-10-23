@@ -1,10 +1,18 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { TuiObscured } from '@taiga-ui/cdk/directives/obscured';
-import { TuiButton, TuiDataList, TuiDropdown, TuiOptGroup, TuiOption } from '@taiga-ui/core';
+import {
+  TuiAppearance,
+  TuiButton,
+  TuiDataList,
+  TuiDropdown,
+  TuiOptGroup,
+  TuiOption,
+} from '@taiga-ui/core';
 import { TuiChevron } from '@taiga-ui/kit';
 
 import { ActionsWithChatService } from '../../../chat/services/actions-with-chat.service';
 import { Chat } from '../../../../shared/interfaces';
+import { ChatRemovalService } from '../../../chat/services/chat-removal.service';
 
 interface Action {
   readonly title: string;
@@ -14,7 +22,16 @@ interface Action {
 
 @Component({
   selector: 'app-chat-actions-button',
-  imports: [TuiButton, TuiDataList, TuiDropdown, TuiObscured, TuiChevron, TuiOptGroup, TuiOption],
+  imports: [
+    TuiButton,
+    TuiDataList,
+    TuiDropdown,
+    TuiObscured,
+    TuiChevron,
+    TuiOptGroup,
+    TuiOption,
+    TuiAppearance,
+  ],
   templateUrl: './chat-actions-button.html',
   styleUrl: './chat-actions-button.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,8 +41,10 @@ interface Action {
 })
 export class ChatActionsButton {
   private readonly actionsWithChatService = inject(ActionsWithChatService);
+  private readonly chatRemovalService = inject(ChatRemovalService);
 
   readonly chat = input.required<Chat>();
+  readonly chatTitle = input<string | null>(null);
 
   protected readonly open = signal(false);
 
@@ -90,14 +109,18 @@ export class ChatActionsButton {
       title: 'Очистить чат',
       iconStart: '@tui.circle-minus',
       action: () => {
-        this.actionsWithChatService.cleanChat();
+        this.chatRemovalService.cleanChat({
+          chatIsOpen: false,
+          chatId: this.chat().id,
+          chatTitle: this.chatTitle(),
+        });
       },
     },
     {
       title: 'Удалить чат',
       iconStart: '@tui.trash',
       action: () => {
-        this.actionsWithChatService.deleteChat();
+        this.chatRemovalService.deleteChat();
       },
     },
   ];

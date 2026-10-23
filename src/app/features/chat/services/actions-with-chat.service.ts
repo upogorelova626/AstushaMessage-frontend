@@ -1,9 +1,10 @@
 import { computed, inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { OpenedChatService } from './opened-chat.service';
-import { ChatSettingsService } from '../../../shared/services/chat-settings.service';
 import { catchError, EMPTY, tap } from 'rxjs';
 import { TuiNotificationService } from '@taiga-ui/core';
+
+import { OpenedChatService } from './opened-chat.service';
+import { ChatSettingsService } from '../../../shared/services/chat-settings.service';
 import { ChatsStoreService } from '../../chats/services/chats-store.service';
 
 interface EditChatFavoriteParametrs {
@@ -21,7 +22,6 @@ export class ActionsWithChatService {
   private readonly chatsStoreService = inject(ChatsStoreService);
 
   private readonly alerts = inject(TuiNotificationService);
-
   private readonly router = inject(Router);
 
   private readonly chatId = computed(() => this.openedChatService.chat()?.id);
@@ -95,15 +95,11 @@ export class ActionsWithChatService {
 
   changeList() {}
 
-  cleanChat() {}
-
   closeChat() {
     this.router.navigate(['/chats']);
   }
 
   complain() {}
-
-  deleteChat() {}
 
   exportChat() {}
 
@@ -131,6 +127,7 @@ export class ActionsWithChatService {
         }),
         catchError(() => {
           const text = isPinned ? 'Не удалось закрепить чат' : 'Не удалось открепить чат';
+
           this.openNegativeAlert(text);
 
           return EMPTY;
@@ -155,13 +152,23 @@ export class ActionsWithChatService {
 
   turnOffSound() {}
 
-  private openPositiveAlert(text: string) {
+  private openPositiveAlert(text: string): void {
     this.alerts
-      .open(`${text}`, { appearance: 'positive', block: 'end', inline: 'start' })
+      .open(text, {
+        appearance: 'positive',
+        block: 'end',
+        inline: 'start',
+      })
       .subscribe();
   }
 
   private openNegativeAlert(text: string): void {
-    this.alerts.open(text, { appearance: 'negative', block: 'end', inline: 'start' }).subscribe();
+    this.alerts
+      .open(text, {
+        appearance: 'negative',
+        block: 'end',
+        inline: 'start',
+      })
+      .subscribe();
   }
 }

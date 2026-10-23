@@ -10,10 +10,10 @@ export class ChatManagementService {
   private readonly astushaMessengerApiUrl = 'http://localhost:3005';
 
   clearChat(chatId: string) {
-    return this.http.delete(`${this.astushaMessengerApiUrl}/chat-management${chatId}/messages`);
+    return this.http.delete(`${this.astushaMessengerApiUrl}/chat-management/${chatId}/messages`);
   }
 
   deleteChat(chatId: string) {
-    return this.http.delete(`${this.astushaMessengerApiUrl}/chat-management${chatId}`);
+    return this.http.delete(`${this.astushaMessengerApiUrl}/chat-management/${chatId}`);
   }
 }

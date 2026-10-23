@@ -11,6 +11,7 @@ import {
 } from '@taiga-ui/core';
 import { OpenedChatService } from '../../../services/opened-chat.service';
 import { ActionsWithChatService } from '../../../services/actions-with-chat.service';
+import { ChatRemovalService } from '../../../services/chat-removal.service';
 
 interface Action {
   readonly title: string;
@@ -43,6 +44,7 @@ interface EditChatParametrs {
 export class ChatMenuButton {
   private readonly openedChatService = inject(OpenedChatService);
   private readonly actionsWithChat = inject(ActionsWithChatService);
+  private readonly chatRemovalService = inject(ChatRemovalService);
 
   private readonly chat = this.openedChatService.chat;
 
@@ -142,14 +144,14 @@ export class ChatMenuButton {
       title: 'Очистить чат',
       iconStart: '@tui.circle-minus',
       action: () => {
-        this.actionsWithChat.cleanChat();
+        this.chatRemovalService.cleanChat({ chatIsOpen: true });
       },
     },
     {
       title: 'Удалить чат',
       iconStart: '@tui.trash',
       action: () => {
-        this.actionsWithChat.deleteChat();
+        this.chatRemovalService.deleteChat();
       },
     },
   ];
