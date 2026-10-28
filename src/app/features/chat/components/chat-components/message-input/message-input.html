@@ -12,15 +12,35 @@
 
   <div class="message-field">
     <tui-textfield>
-      <textarea tuiTextarea placeholder="Введите сообщение" [maxRows]="8"></textarea>
+      <textarea
+        tuiTextarea
+        placeholder="Введите сообщение"
+        [maxRows]="8"
+        [formControl]="messageControl"
+      ></textarea>
 
-      <button
-        tuiButton
-        type="button"
-        appearance="primary"
-        iconStart="@tui.send"
-        class="round-button"
-      ></button>
+      <tui-error [formControl]="messageControl" />
+
+      @if (messageControl.value.trim().length === 0) {
+        <button
+          tuiButton
+          type="button"
+          appearance="primary"
+          iconStart="@tui.mic"
+          class="round-button"
+        ></button>
+      } @else {
+        <button
+          tuiButton
+          type="button"
+          appearance="primary"
+          iconStart="@tui.send"
+          class="round-button"
+          [disabled]="isSending()"
+          (click)="sendMessage()"
+          [loading]="isSending()"
+        ></button>
+      }
     </tui-textfield>
   </div>
 </div>
