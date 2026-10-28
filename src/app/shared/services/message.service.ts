@@ -24,6 +24,8 @@ export class MessageService {
     );
   }
 
+  getAllMessages() {}
+
   editMessage(chatId: string, messageId: string, payload: MessagePayload): Observable<Message> {
     return this.http.patch<Message>(
       `${this.astushaMessengerApiUrl}/chats/${chatId}/messages/${messageId}`,

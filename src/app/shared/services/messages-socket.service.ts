@@ -8,7 +8,10 @@ export class MessagesSocketService {
   private socket: Socket | null = null;
 
   connect(): void {
+    console.log('Вызывается connect()');
+
     if (this.socket) {
+      console.log('Socket уже создан');
       return;
     }
 
@@ -16,10 +19,30 @@ export class MessagesSocketService {
       withCredentials: true,
       autoConnect: true,
     });
+
+    this.socket.on('connect', () => {
+      console.log('Socket подключён:', this.socket?.id);
+    });
+
+    this.socket.on('connect_error', (error) => {
+      console.error('Ошибка подключения Socket.IO:', error.message);
+    });
+
+    this.socket.on('disconnect', (reason) => {
+      console.log('Socket отключён:', reason);
+    });
   }
 
   disconnect(): void {
     this.socket?.disconnect();
     this.socket = null;
+  }
+
+  joinChat(chatId: string): void {
+    this.socket?.emit('chat:join', { chatId });
+  }
+
+  leaveChat(chatId: string): void {
+    this.socket?.emit('chat:leave', { chatId });
   }
 }

@@ -7,6 +7,7 @@ import { catchError, EMPTY, finalize } from 'rxjs';
 import { OpenedChatService } from '../../services/opened-chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { TuiNotificationService } from '@taiga-ui/core';
+import { MessagesSocketService } from '../../../../shared/services/messages-socket.service';
 
 @Component({
   selector: 'app-chat-page',
@@ -21,6 +22,7 @@ export class ChatPage implements OnInit {
 
   private readonly chatService = inject(ChatService);
   private readonly openedChatService = inject(OpenedChatService);
+  private readonly messagesSocketService = inject(MessagesSocketService);
 
   protected readonly isChatLoading = signal<boolean>(false);
 
@@ -47,5 +49,7 @@ export class ChatPage implements OnInit {
       .subscribe((chat) => {
         this.openedChatService.setChat(chat);
       });
+
+    this.messagesSocketService.connect();
   }
 }
