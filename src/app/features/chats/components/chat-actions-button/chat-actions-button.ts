@@ -75,7 +75,12 @@ export class ChatActionsButton {
         ? 'Пометить как прочитанное'
         : 'Пометить как непрочитанное',
       iconStart: '@tui.message-square-text',
-      action: () => {},
+      action: () => {
+        this.actionsWithChatService.changeReadStatus(
+          this.chat().id,
+          !this.chat().settings.isMarkedUnread,
+        );
+      },
     },
     {
       title: this.chat().settings.isFavorite ? 'Удалить из избранного' : 'Добавить в избранное',

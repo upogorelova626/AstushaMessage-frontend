@@ -6,6 +6,7 @@ import {
   FavoriteChatRequest,
   MuteChatRequest,
   PinChatRequest,
+  ReadChatRequest,
 } from '../interfaces';
 import { Observable } from 'rxjs';
 
@@ -41,6 +42,13 @@ export class ChatSettingsService {
   muteChat(chatId: string, payload: MuteChatRequest): Observable<Chat> {
     return this.http.patch<Chat>(
       `${this.astushaMessengerApiUrl}/chat-settings/${chatId}/mute`,
+      payload,
+    );
+  }
+
+  updateChatReadStatus(chatId: string, payload: ReadChatRequest) {
+    return this.http.patch<Chat>(
+      `${this.astushaMessengerApiUrl}/chat-settings/${chatId}/read`,
       payload,
     );
   }

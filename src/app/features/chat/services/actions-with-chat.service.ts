@@ -95,6 +95,36 @@ export class ActionsWithChatService {
 
   changeList() {}
 
+  changeReadStatus(chatId: string, value: boolean) {
+    const payload = { isMarkedUnread: value };
+
+    this.chatSettingsService
+      .updateChatReadStatus(chatId, payload)
+      .pipe(
+        tap(() => {
+          const text = value ? 'Помечен как непрочитанный' : 'Помечен как прочитанный';
+
+          this.openPositiveAlert(text);
+        }),
+        catchError(() => {
+          const text = value
+            ? 'Не удалось пометить чат непрочитанным'
+            : 'Не удалось пометить чат прочитанным';
+
+          this.openNegativeAlert(text);
+
+          return EMPTY;
+        }),
+      )
+      .subscribe((chat) => {
+        this.chatsStoreService.getAllChats();
+
+        if (this.chatId() === chat.id) {
+          this.openedChatService.setChat(chat);
+        }
+      });
+  }
+
   closeChat() {
     this.router.navigate(['/chats']);
   }

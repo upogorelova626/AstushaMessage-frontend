@@ -18,6 +18,10 @@
         <tui-icon icon="@tui.pin" class="icon" />
       }
 
+      @if (chat().settings.isMarkedUnread) {
+        <button tuiButton class="round-button"></button>
+      }
+
       <app-chat-actions-button class="actions-button" [chat]="chat()" [chatTitle]="chatTitle()" />
     </div>
   </div>
