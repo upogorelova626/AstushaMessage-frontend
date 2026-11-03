@@ -1,7 +1,9 @@
-<tui-scrollbar>
+<tui-scrollbar #scrollbar>
   <div class="wrapper">
+    <div #loadMore></div>
+
     <div class="messages-list">
-      @for (message of MOCK_MESSAGES; track message.id) {
+      @for (message of messages()?.items; track message.id) {
         <app-message [message]="message" />
       }
     </div>

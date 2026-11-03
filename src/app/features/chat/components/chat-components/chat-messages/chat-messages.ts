@@ -1,93 +1,68 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { TuiScrollbar } from '@taiga-ui/core';
 import { Message } from '../message/message';
-
-export interface ChatMessage {
-  id: string;
-  text: string;
-  createdAt: string;
-  isMine: boolean;
-  isRead: boolean;
-}
+import { MessagesStoreService } from '../../../services/messages-store.service';
+import { TuiSkeleton } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-chat-messages',
-  imports: [TuiScrollbar, Message],
+  imports: [TuiScrollbar, Message, TuiSkeleton],
   templateUrl: './chat-messages.html',
   styleUrl: './chat-messages.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatMessages {
-  MOCK_MESSAGES: ChatMessage[] = [
-    {
-      id: '1',
-      text: 'Привет! Как дела?',
-      createdAt: '2026-10-15T10:30:00',
-      isMine: false,
-      isRead: true,
-    },
-    {
-      id: '2',
-      text: 'Привет! Всё отлично, а у тебя?',
-      createdAt: '2026-10-15T10:32:00',
-      isMine: true,
-      isRead: true,
-    },
-    {
-      id: '3',
-      text: 'Тоже хорошо! Чем занимаешься?',
-      createdAt: '2026-10-15T10:35:00',
-      isMine: false,
-      isRead: true,
-    },
-    {
-      id: '4',
-      text: 'Разрабатываю свой мессенджер на Angular и NestJS 😎',
-      createdAt: '2026-10-15T10:36:00',
-      isMine: true,
-      isRead: true,
-    },
-    {
-      id: '5',
-      text: 'Ого, круто! А что уже реализовано?',
-      createdAt: '2026-10-15T10:38:00',
-      isMine: false,
-      isRead: true,
-    },
-    {
-      id: '6',
-      text: 'Авторизация, создание чатов, поиск пользователей. Сейчас работаю над сообщениями.',
-      createdAt: '2026-10-15T10:40:00',
-      isMine: true,
-      isRead: true,
-    },
-    {
-      id: '7',
-      text: 'Доброе утро! Как продвигается разработка?',
-      createdAt: '2026-10-16T09:15:00',
-      isMine: false,
-      isRead: true,
-    },
-    {
-      id: '8',
-      text: 'Привет! Уже сверстал шапку чата, теперь делаю список сообщений.',
-      createdAt: '2026-10-16T09:20:00',
-      isMine: true,
-      isRead: true,
-    },
-    {
-      id: '9',
-      text: 'Надо будет ещё WebSocket подключить.',
-      createdAt: '2026-10-16T09:22:00',
-      isMine: true,
-      isRead: true,
-    },
-    {
-      id: '10',
-      text: 'Да, без него мессенджер не обойдётся 😄',
-      createdAt: '2026-10-16T09:25:00',
-      isMine: false,
-      isRead: true,
-    },
-  ];
+export class ChatMessages implements AfterViewInit, OnDestroy, OnInit {
+  @ViewChild('loadMore')
+  private loadMore!: ElementRef<HTMLElement>;
+  private observer!: IntersectionObserver;
+
+  @ViewChild('messagesContainer')
+  private messagesContainer?: ElementRef<HTMLElement>;
+
+  private readonly messageStoreService = inject(MessagesStoreService);
+
+  protected readonly messages = this.messageStoreService.messages;
+
+  protected readonly isLoading = this.messageStoreService.isLoading;
+
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    this.observer = new IntersectionObserver((entries) => {
+      const trigger = entries[0];
+
+      if (!trigger.isIntersecting) {
+        return;
+      }
+
+      this.messageStoreService.addMessages();
+
+      this.observer.observe(this.loadMore.nativeElement);
+
+      this.scrollToBottom();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.observer.disconnect();
+  }
+
+  private scrollToBottom(): void {
+    const element = this.messagesContainer?.nativeElement;
+
+    if (!element) {
+      return;
+    }
+
+    element.scrollTop = element.scrollHeight;
+  }
 }

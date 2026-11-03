@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { ChatHeader } from '../../components/chat-components/chat-header/chat-header';
 import { ChatMessages } from '../../components/chat-components/chat-messages/chat-messages';
 import { MessageInput } from '../../components/chat-components/message-input/message-input';
@@ -8,6 +16,7 @@ import { OpenedChatService } from '../../services/opened-chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { TuiNotificationService } from '@taiga-ui/core';
 import { MessagesSocketService } from '../../../../shared/services/messages-socket.service';
+import { MessagesStoreService } from '../../services/messages-store.service';
 
 @Component({
   selector: 'app-chat-page',
@@ -16,12 +25,13 @@ import { MessagesSocketService } from '../../../../shared/services/messages-sock
   styleUrl: './chat-page.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatPage implements OnInit {
+export class ChatPage implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly alerts = inject(TuiNotificationService);
 
   private readonly chatService = inject(ChatService);
   private readonly openedChatService = inject(OpenedChatService);
+  private readonly messageStoreService = inject(MessagesStoreService);
   private readonly messagesSocketService = inject(MessagesSocketService);
 
   protected readonly isChatLoading = signal<boolean>(false);
@@ -48,8 +58,17 @@ export class ChatPage implements OnInit {
       )
       .subscribe((chat) => {
         this.openedChatService.setChat(chat);
+
+        this.messageStoreService.activeChatId.set(chatId);
+        this.messageStoreService.getMessages();
+
+        this.messagesSocketService.joinChat(chat.id);
       });
 
     this.messagesSocketService.connect();
+  }
+
+  ngOnDestroy(): void {
+    this.messageStoreService.cleanMessages();
   }
 }

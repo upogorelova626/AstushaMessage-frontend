@@ -7,8 +7,8 @@ export interface ChatMessage {
   id: string;
   text: string;
   createdAt: string;
-  isMine: boolean;
-  isRead: boolean;
+  //   isMine: boolean;
+  //   isRead: boolean;
 }
 
 @Component({

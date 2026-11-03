@@ -1,9 +1,4 @@
-<div
-  tuiMessage
-  class="message"
-  [class.message_outgoing]="message().isMine"
-  [class.message_incoming]="!message().isMine"
->
+<div tuiMessage class="message">
   <div class="message__text">
     {{ message().text }}
   </div>
@@ -13,11 +8,13 @@
       {{ message().createdAt | date: 'HH:mm' }}
     </span>
 
-    @if (message().isMine) {
+    <!-- @if (message().isMine) {
       <tui-icon
         class="message__read-status"
         [icon]="message().isRead ? '@tui.check-check' : '@tui.check'"
       />
-    }
+    } -->
   </div>
 </div>
+
+<!-- /* [class.message_outgoing]="message().isMine" */ /* [class.message_incoming]="!message().isMine" */ -->

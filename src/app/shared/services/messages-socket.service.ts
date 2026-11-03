@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
+import { Subject } from 'rxjs';
+import { Message } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessagesSocketService {
   private socket: Socket | null = null;
+
+  private readonly newMessageSubject = new Subject<Message>();
+  readonly newMessage$ = this.newMessageSubject.asObservable();
 
   connect(): void {
     console.log('Вызывается connect()');
@@ -18,6 +23,10 @@ export class MessagesSocketService {
     this.socket = io('http://localhost:3005', {
       withCredentials: true,
       autoConnect: true,
+    });
+
+    this.socket.on('message: new', (message: Message) => {
+      this.newMessageSubject.next(message);
     });
 
     this.socket.on('connect', () => {

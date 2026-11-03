@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Message, MessagePayload } from '../interfaces';
 import { Observable } from 'rxjs';
+import { MessagesList } from '../interfaces/messages-list.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,12 @@ export class MessageService {
     );
   }
 
-  getAllMessages() {}
+  getAllMessages(chatId: string, cursor?: null | string) {
+    return this.http.post<MessagesList>(
+      `${this.astushaMessengerApiUrl}/chats/${chatId}/messages/list`,
+      { cursor: cursor ?? null },
+    );
+  }
 
   editMessage(chatId: string, messageId: string, payload: MessagePayload): Observable<Message> {
     return this.http.patch<Message>(
