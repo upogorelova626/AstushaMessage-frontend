@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Sidebar } from '../../../features/chats/components/sidebar/sidebar';
 import { CurrentUserService } from '../../services/current-user.service';
@@ -8,6 +9,7 @@ import { CurrentUserService } from '../../services/current-user.service';
   imports: [RouterOutlet, Sidebar],
   templateUrl: './app-laylout.html',
   styleUrl: './app-laylout.less',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppLaylout implements OnInit {
   private readonly currentUserService = inject(CurrentUserService);

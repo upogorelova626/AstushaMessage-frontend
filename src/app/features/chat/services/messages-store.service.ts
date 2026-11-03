@@ -3,7 +3,7 @@ import { TuiNotificationService } from '@taiga-ui/core';
 import { catchError, EMPTY, finalize } from 'rxjs';
 
 import { MessageService } from '../../../shared/services/message.service';
-import { MessagesList } from '../../../shared/interfaces';
+import type { MessagesList } from '../../../shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +14,9 @@ export class MessagesStoreService {
 
   private requestVersion = 0;
 
-  public activeChatId = signal<string | null>(null);
   public readonly messages = signal<MessagesList | null>(null);
   public readonly isLoading = signal(false);
+  public activeChatId = signal<string | null>(null);
 
   getMessages(): void {
     const chatId = this.activeChatId();

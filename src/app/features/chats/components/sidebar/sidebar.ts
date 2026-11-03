@@ -15,11 +15,11 @@ export class Sidebar {
   private readonly router = inject(Router);
   private readonly currentUserService = inject(CurrentUserService);
 
-  protected goTo(path: string): void {
-    this.router.navigate([path]);
-  }
-
   protected readonly currentUser = toSignal(this.currentUserService.currentUser$, {
     initialValue: null,
   });
+
+  protected goTo(path: string): void {
+    this.router.navigate([path]);
+  }
 }

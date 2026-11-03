@@ -15,7 +15,7 @@ export class ChatEmptyState {
   private readonly sidebarService = inject(SideBarService);
   private readonly injector = inject(Injector);
 
-  protected addChat(event: MouseEvent) {
+  protected addChat(event: MouseEvent): void {
     event.preventDefault();
     event.stopPropagation();
 

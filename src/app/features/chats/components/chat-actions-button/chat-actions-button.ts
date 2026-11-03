@@ -11,7 +11,7 @@ import {
 import { TuiChevron } from '@taiga-ui/kit';
 
 import { ActionsWithChatService } from '../../../chat/services/actions-with-chat.service';
-import { Chat } from '../../../../shared/interfaces';
+import type { Chat } from '../../../../shared/interfaces';
 import { ChatRemovalService } from '../../../chat/services/chat-removal.service';
 
 interface Action {

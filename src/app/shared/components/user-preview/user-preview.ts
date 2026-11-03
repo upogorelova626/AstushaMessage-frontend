@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { AstushaUserPreview } from '../../interfaces';
+import type { AstushaUserPreview } from '../../interfaces';
 
 @Component({
   selector: 'app-user-preview',

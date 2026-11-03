@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import {
+import type {
   ArchiveChatRequest,
   Chat,
   FavoriteChatRequest,
@@ -8,7 +8,7 @@ import {
   PinChatRequest,
   ReadChatRequest,
 } from '../interfaces';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -46,7 +46,7 @@ export class ChatSettingsService {
     );
   }
 
-  updateChatReadStatus(chatId: string, payload: ReadChatRequest) {
+  updateChatReadStatus(chatId: string, payload: ReadChatRequest): Observable<Chat> {
     return this.http.patch<Chat>(
       `${this.astushaMessengerApiUrl}/chat-settings/${chatId}/read`,
       payload,

@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TuiDrawer } from '@taiga-ui/kit';
 import { AsyncPipe } from '@angular/common';
 import { PolymorpheusOutlet } from '@taiga-ui/polymorpheus';
-import { SidebarOptions, SideBarService } from './sidebar.service';
-import { BarItem } from './base-bar.service';
+import type { SidebarOptions } from './sidebar.service';
+import { SideBarService } from './sidebar.service';
+import type { BarItem } from './base-bar.service';
 
 @Component({
   selector: 'app-sidebar-host',
@@ -17,7 +18,7 @@ export class SidebarHost {
 
   protected readonly items$ = this.sidebarService.items$;
 
-  onClickOutside(event: MouseEvent, item: BarItem<unknown, SidebarOptions, unknown>) {
+  onClickOutside(event: MouseEvent, item: BarItem<unknown, SidebarOptions, unknown>): void {
     if (item.options?.closeOnClickOutside && event.target === event.currentTarget) {
       item.context.complete();
     }

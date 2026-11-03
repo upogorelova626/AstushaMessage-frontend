@@ -1,7 +1,8 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-import { Chat, ChatType } from '../../../shared/interfaces';
+import type { Chat} from '../../../shared/interfaces';
+import { ChatType } from '../../../shared/interfaces';
 import { CurrentUserService } from '../../../shared/services/current-user.service';
 
 @Injectable({

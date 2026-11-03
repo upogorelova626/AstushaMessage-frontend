@@ -26,7 +26,7 @@ export class ActionsWithChatService {
 
   private readonly chatId = computed(() => this.openedChatService.chat()?.id);
 
-  archiveChat(chatId: string, value: boolean) {
+  archiveChat(chatId: string, value: boolean): void {
     const payload = { isArchived: value };
 
     this.chatSettingsService
@@ -53,9 +53,9 @@ export class ActionsWithChatService {
       });
   }
 
-  block() {}
+  //   block() {}
 
-  changeFavorite(parametrs: EditChatFavoriteParametrs) {
+  changeFavorite(parametrs: EditChatFavoriteParametrs): void {
     const chatId = parametrs.chatIsOpen ? this.chatId() : parametrs.chatId;
 
     if (!chatId) {
@@ -93,9 +93,9 @@ export class ActionsWithChatService {
       });
   }
 
-  changeList() {}
+  //   changeList() {}
 
-  changeReadStatus(chatId: string, value: boolean) {
+  changeReadStatus(chatId: string, value: boolean): void {
     const payload = { isMarkedUnread: value };
 
     this.chatSettingsService
@@ -125,19 +125,19 @@ export class ActionsWithChatService {
       });
   }
 
-  closeChat() {
+  closeChat(): void {
     this.router.navigate(['/chats']);
   }
 
-  complain() {}
+  //   complain() {}
 
-  exportChat() {}
+  //   exportChat() {}
 
-  openChatThemesPage() {}
+  //   openChatThemesPage() {}
 
-  openContactDetailsPage() {}
+  //   openContactDetailsPage() {}
 
-  openSearchMessageInChatPage() {
+  openSearchMessageInChatPage(): void {
     const id = this.chatId();
 
     if (id) {
@@ -172,15 +172,15 @@ export class ActionsWithChatService {
       });
   }
 
-  selectChatMessages() {}
+  //   selectChatMessages() {}
 
-  sendCallLink() {}
+  //   sendCallLink() {}
 
-  startNewGroupCall() {}
+  //   startNewGroupCall() {}
 
-  turnOffDisappearingMessages() {}
+  //   turnOffDisappearingMessages() {}
 
-  turnOffSound() {}
+  //   turnOffSound() {}
 
   private openPositiveAlert(text: string): void {
     this.alerts

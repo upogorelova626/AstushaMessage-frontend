@@ -1,4 +1,5 @@
 <button
+  type="button"
   tuiButton
   appearance="flat"
   class="chat-item"
@@ -25,7 +26,7 @@
       }
 
       @if (chat().settings.isMarkedUnread) {
-        <button tuiButton class="round-button" [size]="'xs'"></button>
+        <button type="button" tuiButton class="round-button" [size]="'xs'"></button>
       }
 
       @if (isHovered()) {

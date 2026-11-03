@@ -1,5 +1,6 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
+import type { OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
+import type { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export type BarContext<T = Record<string, unknown>, CompleteResult = undefined> = {
@@ -47,7 +48,7 @@ export class BaseBarService<Options> implements OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     for (const item of this._items$.getValue()) {
       item.context.complete(null);
     }

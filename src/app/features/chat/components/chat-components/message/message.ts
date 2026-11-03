@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { TuiIcon } from '@taiga-ui/core';
 import { TuiMessage } from '@taiga-ui/kit';
 
@@ -16,6 +16,7 @@ export interface ChatMessage {
   imports: [TuiMessage, TuiIcon, DatePipe],
   templateUrl: './message.html',
   styleUrl: './message.less',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Message {
   readonly message = input.required<ChatMessage>();

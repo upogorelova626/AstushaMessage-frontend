@@ -1,26 +1,27 @@
-import {
+import type {
   AfterViewInit,
+  ElementRef,
+  OnDestroy} from '@angular/core';
+import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   inject,
-  OnDestroy,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { TuiScrollbar } from '@taiga-ui/core';
 import { Message } from '../message/message';
 import { MessagesStoreService } from '../../../services/messages-store.service';
-import { TuiSkeleton } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-chat-messages',
-  imports: [TuiScrollbar, Message, TuiSkeleton],
+  imports: [TuiScrollbar, Message],
   templateUrl: './chat-messages.html',
   styleUrl: './chat-messages.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatMessages implements AfterViewInit, OnDestroy, OnInit {
+export class ChatMessages implements AfterViewInit, OnDestroy {
+  private readonly messageStoreService = inject(MessagesStoreService);
+
   @ViewChild('loadMore')
   private loadMore!: ElementRef<HTMLElement>;
   private observer!: IntersectionObserver;
@@ -28,13 +29,11 @@ export class ChatMessages implements AfterViewInit, OnDestroy, OnInit {
   @ViewChild('messagesContainer')
   private messagesContainer?: ElementRef<HTMLElement>;
 
-  private readonly messageStoreService = inject(MessagesStoreService);
-
   protected readonly messages = this.messageStoreService.messages;
 
   protected readonly isLoading = this.messageStoreService.isLoading;
 
-  ngOnInit(): void {}
+  //   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.observer = new IntersectionObserver((entries) => {

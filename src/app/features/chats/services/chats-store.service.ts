@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Chat } from '../../../shared/interfaces';
+import type { Chat } from '../../../shared/interfaces';
 import { finalize } from 'rxjs';
 import { ChatService } from '../../../shared/services/chat.service';
 
@@ -12,7 +12,7 @@ export class ChatsStoreService {
   readonly chats = signal<Chat[]>([]);
   readonly isLoading = signal<boolean>(false);
 
-  public getAllChats() {
+  public getAllChats(): void {
     this.chatService
       .getAllChats()
       .pipe(finalize(() => this.isLoading.set(false)))

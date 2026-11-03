@@ -1,3 +1,5 @@
+import type {
+  OnInit} from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,12 +7,12 @@ import {
   forwardRef,
   inject,
   Injector,
-  OnInit,
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import type {
+  ControlValueAccessor} from '@angular/forms';
 import {
-  ControlValueAccessor,
   FormControl,
   NG_VALUE_ACCESSOR,
   NgControl,
@@ -33,12 +35,11 @@ import {
   of,
   Subject,
   switchMap,
-  takeUntil,
   tap,
   timer,
 } from 'rxjs';
 
-import { AstushaUserPreview } from '../../../../shared/interfaces';
+import type { AstushaUserPreview } from '../../../../shared/interfaces';
 import { SearchUserService } from '../../../../shared/services/search-user.service';
 import { UserPreview } from '../../../../shared/components/user-preview/user-preview';
 
@@ -81,11 +82,6 @@ export class SearchUsers implements ControlValueAccessor, OnInit {
 
   private readonly selectedUser = signal<AstushaUserPreview | null>(null);
 
-  private onChange: (value: AstushaUserPreview | null) => void = () => {};
-  private onTouched: () => void = () => {};
-
-  protected parentNgControl: NgControl | null = null;
-
   protected readonly search$ = new Subject<string>();
   protected readonly foundedUsers = signal<AstushaUserPreview[] | null>([]);
   protected readonly isSearching = signal(false);
@@ -95,11 +91,7 @@ export class SearchUsers implements ControlValueAccessor, OnInit {
     validators: [Validators.minLength(2), Validators.maxLength(254)],
   });
 
-  protected readonly stringifyUser = (user: AstushaUserPreview): string => {
-    const fullName = [user.lastName, user.firstName].filter(Boolean).join(' ');
-
-    return fullName || user.login || '';
-  };
+  protected parentNgControl: NgControl | null = null;
 
   ngOnInit(): void {
     this.parentNgControl = this.injector.get(NgControl, null, {
@@ -187,6 +179,12 @@ export class SearchUsers implements ControlValueAccessor, OnInit {
     this.onTouched();
   }
 
+  protected readonly stringifyUser = (user: AstushaUserPreview): string => {
+    const fullName = [user.lastName, user.firstName].filter(Boolean).join(' ');
+
+    return fullName || user.login || '';
+  };
+
   private searchUser(): void {
     this.search$
       .pipe(
@@ -220,4 +218,10 @@ export class SearchUsers implements ControlValueAccessor, OnInit {
         this.foundedUsers.set(users);
       });
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private onChange: (value: AstushaUserPreview | null) => void = () => {};
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private onTouched: () => void = () => {};
 }

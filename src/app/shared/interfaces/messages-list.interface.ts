@@ -1,4 +1,4 @@
-import { Message } from './message.interface';
+import type { Message } from './message.interface';
 
 export interface MessagesList {
   items: Message[];

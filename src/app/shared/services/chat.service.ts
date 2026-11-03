@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Chat, CreateChat, GetChatRequest } from '../interfaces';
-import { Observable } from 'rxjs';
+import type { Chat, CreateChat } from '../interfaces';
+import type { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

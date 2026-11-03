@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ChatList } from '../../components/chat-list/chat-list';
 import { SideBarService } from '../../../../shared/drawer/sidebar.service';
 import { SidebarHost } from '../../../../shared/drawer/sidebar-host';
@@ -16,7 +17,7 @@ import { ChatsStoreService } from '../../services/chats-store.service';
 export class ChatsPage implements OnInit {
   private readonly chatsStoreService = inject(ChatsStoreService);
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.chatsStoreService.getAllChats();
   }
 }

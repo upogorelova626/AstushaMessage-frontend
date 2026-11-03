@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import {
   TuiTextfieldComponent,
   TuiButton,
@@ -35,6 +35,7 @@ import { catchError, EMPTY, finalize } from 'rxjs';
   ],
   templateUrl: './message-input.html',
   styleUrl: './message-input.less',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageInput {
   private readonly openedChatService = inject(OpenedChatService);
@@ -49,7 +50,7 @@ export class MessageInput {
     validators: [Validators.maxLength(4000)],
   });
 
-  protected sendMessage() {
+  protected sendMessage(): void {
     if (this.messageControl.invalid) {
       this.messageControl.markAsTouched();
       return;
@@ -83,6 +84,6 @@ export class MessageInput {
         }),
         finalize(() => this.isSending.set(false)),
       )
-      .subscribe((message) => this.messageControl.reset());
+      .subscribe(() => this.messageControl.reset());
   }
 }

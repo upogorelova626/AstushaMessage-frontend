@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { SearchHeader } from '../../components/search-chat-message-components/search-header/search-header';
 import { SearchInput } from '../../components/search-chat-message-components/search-input/search-input';
 import { SearchResults } from '../../components/search-chat-message-components/search-results/search-results';

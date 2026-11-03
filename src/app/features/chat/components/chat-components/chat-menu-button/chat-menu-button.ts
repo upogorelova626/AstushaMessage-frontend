@@ -20,10 +20,10 @@ interface Action {
   readonly action?: () => void;
 }
 
-interface EditChatParametrs {
-  chatIsOpen: boolean;
-  chatId?: string;
-}
+// interface EditChatParametrs {
+//   chatIsOpen: boolean;
+//   chatId?: string;
+// }
 
 @Component({
   selector: 'app-chat-menu-button',

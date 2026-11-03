@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { TuiButtonX, TuiButton, TuiNotificationService } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
-import { BarContext } from '../../../../shared/drawer/base-bar.service';
+import type { BarContext } from '../../../../shared/drawer/base-bar.service';
 import { SearchUsers } from '../search-users/search-users';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { AstushaUserPreview } from '../../../../shared/interfaces';
+import type { AstushaUserPreview } from '../../../../shared/interfaces';
 import { ChatService } from '../../../../shared/services/chat.service';
 import { Router } from '@angular/router';
 import { catchError, EMPTY, finalize } from 'rxjs';
@@ -24,14 +24,14 @@ export class NewChat {
 
   protected readonly isCreating = signal(false);
 
-  protected readonly context = injectContext<BarContext<any, null>>();
+  protected readonly context = injectContext<BarContext<boolean, null>>();
 
   protected readonly userControl = new FormControl<AstushaUserPreview | null>(
     null,
     Validators.required,
   );
 
-  protected createChat() {
+  protected createChat(): void {
     const userId = this.userControl.value?.id;
 
     if (!userId) {
@@ -57,7 +57,6 @@ export class NewChat {
       )
       .subscribe((chat) => {
         this.router.navigate(['/chats', chat.id]);
-        console.log(2123);
         this.context.complete(null);
       });
   }

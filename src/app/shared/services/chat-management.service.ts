@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import type { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,11 +10,13 @@ export class ChatManagementService {
 
   private readonly astushaMessengerApiUrl = 'http://localhost:3005';
 
-  clearChat(chatId: string) {
-    return this.http.delete(`${this.astushaMessengerApiUrl}/chat-management/${chatId}/messages`);
+  clearChat(chatId: string): Observable<void> {
+    return this.http.delete<void>(
+      `${this.astushaMessengerApiUrl}/chat-management/${chatId}/messages`,
+    );
   }
 
-  deleteChat(chatId: string) {
-    return this.http.delete(`${this.astushaMessengerApiUrl}/chat-management/${chatId}`);
+  deleteChat(chatId: string): Observable<void> {
+    return this.http.delete<void>(`${this.astushaMessengerApiUrl}/chat-management/${chatId}`);
   }
 }

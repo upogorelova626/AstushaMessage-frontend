@@ -1,4 +1,5 @@
-import { computed, inject, Injectable, Type } from '@angular/core';
+import type { Type } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { TuiDialogService, TuiNotificationService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';

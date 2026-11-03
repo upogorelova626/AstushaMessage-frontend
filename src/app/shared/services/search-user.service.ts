@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AstushaUserPreview } from '../interfaces';
+import type { Observable } from 'rxjs';
+import type { AstushaUserPreview } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',

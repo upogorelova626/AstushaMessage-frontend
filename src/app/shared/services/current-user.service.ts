@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { AstushaUser } from '../interfaces';
+import { tap, BehaviorSubject } from 'rxjs';
+import type { Observable } from 'rxjs';
+import type { AstushaUser } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',

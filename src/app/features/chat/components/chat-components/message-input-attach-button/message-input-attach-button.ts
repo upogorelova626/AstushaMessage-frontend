@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { TuiActiveZone } from '@taiga-ui/cdk/directives/active-zone';
 import { TuiObscured } from '@taiga-ui/cdk/directives/obscured';
-import { TuiButton, TuiDataList, TuiDropdown, TuiHint, TuiTitle } from '@taiga-ui/core';
+import { TuiButton, TuiDataList, TuiDropdown, TuiHint } from '@taiga-ui/core';
 
 interface Action {
   readonly title: string;

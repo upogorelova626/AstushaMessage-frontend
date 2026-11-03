@@ -16,13 +16,13 @@ export class ChatHeader {
   private readonly openedChatService = inject(OpenedChatService);
   private readonly actionsWithChatService = inject(ActionsWithChatService);
 
+  readonly isChatLoading = input.required<boolean>();
+
   protected readonly chatTitle = this.openedChatService.chatTitle;
 
   protected readonly chatAvatar = this.openedChatService.chatAvatar;
 
-  readonly isChatLoading = input.required<boolean>();
-
-  protected openSearch() {
+  protected openSearch(): void {
     this.actionsWithChatService.openSearchMessageInChatPage();
   }
 }

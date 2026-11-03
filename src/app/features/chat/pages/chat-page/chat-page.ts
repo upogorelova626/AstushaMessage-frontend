@@ -1,10 +1,10 @@
+import type {
+  OnDestroy,
+  OnInit} from '@angular/core';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnDestroy,
-  OnInit,
   signal,
 } from '@angular/core';
 import { ChatHeader } from '../../components/chat-components/chat-header/chat-header';
