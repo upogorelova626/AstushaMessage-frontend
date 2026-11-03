@@ -1,4 +1,10 @@
-<button tuiButton appearance="flat" class="chat-item" (click)="openChat(chat().id)">
+<button
+  tuiButton
+  appearance="flat"
+  class="chat-item"
+  (click)="openChat(chat().id)"
+  (tuiHoveredChange)="isHovered.set($event)"
+>
   <div [tuiAvatar]="chatAvatar()" class="avatar"></div>
 
   <div class="content">
@@ -11,18 +17,20 @@
   </div>
 
   <div class="meta-containers">
-    <div class="meta">11:20</div>
+    <div class="time">11:20</div>
 
-    <div class="met">
+    <div class="meta">
       @if (chat().settings.isPinned) {
         <tui-icon icon="@tui.pin" class="icon" />
       }
 
       @if (chat().settings.isMarkedUnread) {
-        <button tuiButton class="round-button"></button>
+        <button tuiButton class="round-button" [size]="'xs'"></button>
       }
 
-      <app-chat-actions-button class="actions-button" [chat]="chat()" [chatTitle]="chatTitle()" />
+      @if (isHovered()) {
+        <app-chat-actions-button class="actions-button" [chat]="chat()" [chatTitle]="chatTitle()" />
+      }
     </div>
   </div>
 </button>

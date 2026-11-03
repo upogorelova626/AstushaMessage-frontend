@@ -1,16 +1,16 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
-
 import { Chat, ChatType } from '../../../../shared/interfaces';
 import { CurrentUserService } from '../../../../shared/services/current-user.service';
 import { ChatActionsButton } from '../chat-actions-button/chat-actions-button';
+import { TuiHovered } from '@taiga-ui/cdk/directives/hovered';
 
 @Component({
   selector: 'app-chat-item',
-  imports: [TuiButton, TuiAvatar, TuiIcon, ChatActionsButton],
+  imports: [TuiButton, TuiAvatar, TuiIcon, TuiHovered, ChatActionsButton],
   templateUrl: './chat-item.html',
   styleUrl: './chat-item.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,6 +22,8 @@ export class ChatItem {
   private readonly currentUser = toSignal(this.currentUserService.currentUser$);
 
   public readonly chat = input.required<Chat>();
+
+  protected readonly isHovered = signal<boolean>(false);
 
   protected readonly companion = computed(() => {
     const chat = this.chat();
