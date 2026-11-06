@@ -1,3 +1,5 @@
+import type { Message } from './message.interface';
+
 export enum ChatType {
   Private = 'PRIVATE',
   Group = 'GROUP',
@@ -42,4 +44,5 @@ export interface Chat {
   updatedAt: string;
   participants: ChatParticipant[];
   settings: ChatSettings;
+  lastMessage: Message;
 }

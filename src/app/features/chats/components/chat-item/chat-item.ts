@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, model } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
-import type { Chat} from '../../../../shared/interfaces';
+import type { Chat } from '../../../../shared/interfaces';
 import { ChatType } from '../../../../shared/interfaces';
 import { CurrentUserService } from '../../../../shared/services/current-user.service';
 import { ChatActionsButton } from '../chat-actions-button/chat-actions-button';
@@ -24,7 +24,8 @@ export class ChatItem {
 
   public readonly chat = input.required<Chat>();
 
-  protected readonly isHovered = signal<boolean>(false);
+  protected readonly isHovered = model<boolean>(false);
+  protected readonly isMenuOpen = model<boolean>(false);
 
   protected readonly companion = computed(() => {
     const chat = this.chat();

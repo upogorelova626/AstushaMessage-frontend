@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, model } from '@angular/core';
 import { TuiObscured } from '@taiga-ui/cdk/directives/obscured';
 import {
   TuiAppearance,
@@ -46,7 +46,7 @@ export class ChatActionsButton {
   readonly chat = input.required<Chat>();
   readonly chatTitle = input<string | null>(null);
 
-  protected readonly open = signal(false);
+  readonly open = model(false);
 
   protected readonly actionsFirst = computed<readonly Action[]>(() => [
     {
@@ -148,5 +148,10 @@ export class ChatActionsButton {
   protected onSelect(action: Action): void {
     this.open.set(false);
     action.action?.();
+  }
+
+  protected onActiveZone(event: Event): void {
+    event.stopPropagation();
+    this.open.set(false);
   }
 }

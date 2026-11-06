@@ -13,7 +13,7 @@
 
     <div class="message-preview">
       <tui-icon class="read-status" icon="@tui.check-check" />
-      <div class="last-message">Что то тут написано это последнее сообщение</div>
+      <div class="last-message">{{ chat().lastMessage.text }}</div>
     </div>
   </div>
 
@@ -29,12 +29,13 @@
         <button type="button" tuiButton class="round-button" [size]="'xs'"></button>
       }
 
-      @if (isHovered()) {
+      @if (isHovered() || isMenuOpen()) {
         <app-chat-actions-button
           class="actions-button"
           [chat]="chat()"
           [chatTitle]="chatTitle()"
           (tuiHoveredChange)="isHovered.set($event)"
+          [(open)]="isMenuOpen"
         />
       }
     </div>
