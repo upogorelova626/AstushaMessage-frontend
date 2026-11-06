@@ -1,15 +1,17 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { TuiNotificationService } from '@taiga-ui/core';
 import { catchError, EMPTY, finalize } from 'rxjs';
-
 import { MessageService } from '../../../shared/services/message.service';
-import type { MessagesList } from '../../../shared/interfaces';
+import type { Message, MessagesList } from '../../../shared/interfaces';
+import { MessagesSocketService } from '../../../shared/services/messages-socket.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessagesStoreService {
   private readonly messageService = inject(MessageService);
+  private readonly messagesSocketService = inject(MessagesSocketService);
+
   private readonly alert = inject(TuiNotificationService);
 
   private requestVersion = 0;
@@ -17,6 +19,12 @@ export class MessagesStoreService {
   public readonly messages = signal<MessagesList | null>(null);
   public readonly isLoading = signal(false);
   public activeChatId = signal<string | null>(null);
+
+  constructor() {
+    this.messagesSocketService.newMessage$.subscribe((message) => {
+      this.updateMessages(message);
+    });
+  }
 
   getMessages(): void {
     const chatId = this.activeChatId();
@@ -58,14 +66,7 @@ export class MessagesStoreService {
     const chatId = this.activeChatId();
     const state = this.messages();
 
-    if (
-      this.isLoading() ||
-      this.activeChatId() !== chatId ||
-      !state ||
-      !state.hasMore ||
-      !state.nextCursor ||
-      !chatId
-    ) {
+    if (this.isLoading() || !state || !state.hasMore || !state.nextCursor || !chatId) {
       return;
     }
 
@@ -115,6 +116,27 @@ export class MessagesStoreService {
 
     this.messages.set(null);
     this.isLoading.set(false);
+  }
+
+  private updateMessages(message: Message): void {
+    if (this.activeChatId() !== message.chatId) {
+      return;
+    }
+
+    this.messages.update((current) => {
+      if (!current) {
+        return null;
+      }
+
+      if (current.items.some((item) => item.id === message.id)) {
+        return current;
+      }
+
+      return {
+        ...current,
+        items: [...current.items, message],
+      };
+    });
   }
 
   private isCurrentRequest(chatId: string, version: number): boolean {

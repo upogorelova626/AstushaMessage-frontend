@@ -15,12 +15,16 @@ export class MessagesSocketService {
   readonly newMessage$ = this.newMessageSubject.asObservable();
 
   connect(): void {
+    if (this.socket) {
+      return;
+    }
+
     this.socket = io('http://localhost:3005', {
       withCredentials: true,
       autoConnect: true,
     });
 
-    this.socket.on('message: new', (message: Message) => {
+    this.socket.on('message:new', (message: Message) => {
       this.newMessageSubject.next(message);
     });
 
