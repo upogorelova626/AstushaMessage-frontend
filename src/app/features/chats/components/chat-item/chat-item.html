@@ -30,7 +30,12 @@
       }
 
       @if (isHovered()) {
-        <app-chat-actions-button class="actions-button" [chat]="chat()" [chatTitle]="chatTitle()" />
+        <app-chat-actions-button
+          class="actions-button"
+          [chat]="chat()"
+          [chatTitle]="chatTitle()"
+          (tuiHoveredChange)="isHovered.set($event)"
+        />
       }
     </div>
   </div>

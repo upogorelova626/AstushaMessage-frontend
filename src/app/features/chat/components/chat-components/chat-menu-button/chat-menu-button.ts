@@ -52,7 +52,7 @@ export class ChatMenuButton {
     {
       title: 'Данные контакта',
       iconStart: '@tui.info',
-      action: () => this.actionsWithChat.openContactDetailsPage(),
+      //   action: () => this.actionsWithChat.openContactDetailsPage(),
     },
     {
       title: 'Поиск',
@@ -62,23 +62,23 @@ export class ChatMenuButton {
     {
       title: 'Выбрать сообщения',
       iconStart: '@tui.square-check',
-      action: () => this.actionsWithChat.selectChatMessages(),
+      //   action: () => this.actionsWithChat.selectChatMessages(),
     },
     {
       title: this.chat()!.settings.isMuted ? 'Включить звук' : 'Без звука',
       iconStart: this.chat()!.settings.isMuted ? '@tui.bell' : '@tui.bell-off',
       iconEnd: this.chat()!.settings.isMuted ? undefined : '@tui.chevron-right',
-      action: () => this.actionsWithChat.turnOffSound(),
+      //   action: () => this.actionsWithChat.turnOffSound(),
     },
     {
       title: 'Исчезающие сообщения',
       iconStart: '@tui.clock-fading',
-      action: () => this.actionsWithChat.turnOffDisappearingMessages(),
+      //   action: () => this.actionsWithChat.turnOffDisappearingMessages(),
     },
     {
       title: 'Тема чата',
       iconStart: '@tui.palette',
-      action: () => this.actionsWithChat.openChatThemesPage(),
+      //   action: () => this.actionsWithChat.openChatThemesPage(),
     },
     {
       title: this.chat()!.settings.isFavorite ? 'Удалить из избранного' : 'Добавить в избранное',
@@ -94,12 +94,12 @@ export class ChatMenuButton {
       title: 'Изменить список',
       iconStart: '@tui.images',
       iconEnd: '@tui.chevron-right',
-      action: () => this.actionsWithChat.changeList(),
+      //   action: () => this.actionsWithChat.changeList(),
     },
     {
       title: 'Экспорт чата',
       iconStart: '@tui.download',
-      action: () => this.actionsWithChat.exportChat(),
+      //   action: () => this.actionsWithChat.exportChat(),
     },
     {
       title: 'Закрыть окно чата',
@@ -113,14 +113,14 @@ export class ChatMenuButton {
       title: 'Отправить ссылку на звонок',
       iconStart: '@tui.link-2',
       action: () => {
-        this.actionsWithChat.sendCallLink();
+        // this.actionsWithChat.sendCallLink();
       },
     },
     {
       title: 'Новый групповой звонок',
       iconStart: '@tui.user-round-plus',
       action: () => {
-        this.actionsWithChat.startNewGroupCall();
+        // this.actionsWithChat.startNewGroupCall();
       },
     },
   ];
@@ -130,14 +130,14 @@ export class ChatMenuButton {
       title: 'Пожаловаться',
       iconStart: '@tui.thumbs-down',
       action: () => {
-        this.actionsWithChat.complain();
+        // this.actionsWithChat.complain();
       },
     },
     {
       title: 'Заблокировать',
       iconStart: '@tui.ban',
       action: () => {
-        this.actionsWithChat.block();
+        // this.actionsWithChat.block();
       },
     },
     {

@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { TuiIcon } from '@taiga-ui/core';
 import { TuiMessage } from '@taiga-ui/kit';
 
 export interface ChatMessage {
@@ -13,7 +12,7 @@ export interface ChatMessage {
 
 @Component({
   selector: 'app-message',
-  imports: [TuiMessage, TuiIcon, DatePipe],
+  imports: [TuiMessage, DatePipe],
   templateUrl: './message.html',
   styleUrl: './message.less',
   changeDetection: ChangeDetectionStrategy.OnPush,

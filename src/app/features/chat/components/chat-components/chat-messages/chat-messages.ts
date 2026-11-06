@@ -1,13 +1,6 @@
-import type {
-  AfterViewInit,
-  ElementRef,
-  OnDestroy} from '@angular/core';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  ViewChild,
-} from '@angular/core';
+import { afterEveryRender, ElementRef } from '@angular/core';
+import type { OnDestroy, AfterViewInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, viewChild, ViewChild } from '@angular/core';
 import { TuiScrollbar } from '@taiga-ui/core';
 import { Message } from '../message/message';
 import { MessagesStoreService } from '../../../services/messages-store.service';
@@ -22,18 +15,41 @@ import { MessagesStoreService } from '../../../services/messages-store.service';
 export class ChatMessages implements AfterViewInit, OnDestroy {
   private readonly messageStoreService = inject(MessagesStoreService);
 
+  private readonly scrollBar = viewChild(TuiScrollbar, { read: ElementRef<HTMLElement> });
+
   @ViewChild('loadMore')
   private loadMore!: ElementRef<HTMLElement>;
   private observer!: IntersectionObserver;
 
-  @ViewChild('messagesContainer')
-  private messagesContainer?: ElementRef<HTMLElement>;
+  private initialScrollDone = false;
 
   protected readonly messages = this.messageStoreService.messages;
 
   protected readonly isLoading = this.messageStoreService.isLoading;
 
-  //   ngOnInit(): void {}
+  constructor() {
+    afterEveryRender(() => {
+      const messages = this.messages();
+
+      if (!messages) {
+        this.initialScrollDone = false;
+        return;
+      }
+
+      if (this.initialScrollDone) {
+        return;
+      }
+
+      const element = this.scrollBar()?.nativeElement;
+
+      if (!element) {
+        return;
+      }
+
+      this.scrollToBottom();
+      this.initialScrollDone = true;
+    });
+  }
 
   ngAfterViewInit(): void {
     this.observer = new IntersectionObserver((entries) => {
@@ -46,8 +62,6 @@ export class ChatMessages implements AfterViewInit, OnDestroy {
       this.messageStoreService.addMessages();
 
       this.observer.observe(this.loadMore.nativeElement);
-
-      this.scrollToBottom();
     });
   }
 
@@ -56,12 +70,12 @@ export class ChatMessages implements AfterViewInit, OnDestroy {
   }
 
   private scrollToBottom(): void {
-    const element = this.messagesContainer?.nativeElement;
+    const scrollBar = this.scrollBar();
 
-    if (!element) {
+    if (!scrollBar) {
       return;
     }
 
-    element.scrollTop = element.scrollHeight;
+    scrollBar.nativeElement.scrollTop = scrollBar.nativeElement.scrollHeight;
   }
 }

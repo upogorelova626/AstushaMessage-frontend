@@ -60,7 +60,7 @@ export class ChatActionsButton {
       title: this.chat().settings.isMuted ? 'Включить звук' : 'Без звука',
       iconStart: this.chat().settings.isMuted ? '@tui.bell' : '@tui.bell-off',
       action: () => {
-        this.actionsWithChatService.turnOffSound();
+        // this.actionsWithChatService.turnOffSound();
       },
     },
     {
@@ -97,7 +97,7 @@ export class ChatActionsButton {
       title: 'Изменить список',
       iconStart: '@tui.images',
       action: () => {
-        this.actionsWithChatService.changeList();
+        // this.actionsWithChatService.changeList();
       },
     },
   ]);
@@ -107,7 +107,7 @@ export class ChatActionsButton {
       title: 'Заблокировать',
       iconStart: '@tui.ban',
       action: () => {
-        this.actionsWithChatService.block();
+        // this.actionsWithChatService.block();
       },
     },
     {

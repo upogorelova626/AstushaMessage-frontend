@@ -1,7 +1,6 @@
 <tui-scrollbar #scrollbar>
+  <div #loadMore></div>
   <div class="wrapper">
-    <div #loadMore></div>
-
     <div class="messages-list">
       @for (message of messages()?.items; track message.id) {
         <app-message [message]="message" />
