@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { TuiNotificationService } from '@taiga-ui/core';
 import { catchError, EMPTY, finalize } from 'rxjs';
 import { MessageService } from '../../../shared/services/message.service';
@@ -19,6 +19,12 @@ export class MessagesStoreService {
   public readonly messages = signal<MessagesList | null>(null);
   public readonly isLoading = signal(false);
   public activeChatId = signal<string | null>(null);
+
+  public noMoreMessages = computed(() => {
+    const messagesResponce = this.messages()?.hasMore;
+
+    return !messagesResponce;
+  });
 
   constructor() {
     this.messagesSocketService.newMessage$.subscribe((message) => {
@@ -102,7 +108,7 @@ export class MessagesStoreService {
           }
 
           return {
-            items: [...current.items, ...response.items],
+            items: [...response.items, ...current.items],
             hasMore: response.hasMore,
             nextCursor: response.nextCursor,
           };

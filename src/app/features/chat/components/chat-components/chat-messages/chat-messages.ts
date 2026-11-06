@@ -1,13 +1,14 @@
 import { afterEveryRender, ElementRef } from '@angular/core';
 import type { OnDestroy, AfterViewInit } from '@angular/core';
 import { ChangeDetectionStrategy, Component, inject, viewChild, ViewChild } from '@angular/core';
-import { TuiScrollbar } from '@taiga-ui/core';
-import { Message } from '../message/message';
+import { TuiScrollbar, TuiAppearance } from '@taiga-ui/core';
+import { MessageItem } from '../message/message';
 import { MessagesStoreService } from '../../../services/messages-store.service';
+import { TuiBadge } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-chat-messages',
-  imports: [TuiScrollbar, Message],
+  imports: [TuiScrollbar, MessageItem, TuiBadge, TuiAppearance],
   templateUrl: './chat-messages.html',
   styleUrl: './chat-messages.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,8 +25,8 @@ export class ChatMessages implements AfterViewInit, OnDestroy {
   private initialScrollDone = false;
 
   protected readonly messages = this.messageStoreService.messages;
-
   protected readonly isLoading = this.messageStoreService.isLoading;
+  protected readonly noMoreMessages = this.messageStoreService.noMoreMessages;
 
   constructor() {
     afterEveryRender(() => {
@@ -60,9 +61,9 @@ export class ChatMessages implements AfterViewInit, OnDestroy {
       }
 
       this.messageStoreService.addMessages();
-
-      this.observer.observe(this.loadMore.nativeElement);
     });
+
+    this.observer.observe(this.loadMore.nativeElement);
   }
 
   ngOnDestroy(): void {

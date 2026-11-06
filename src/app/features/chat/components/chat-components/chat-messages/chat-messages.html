@@ -1,6 +1,14 @@
 <tui-scrollbar #scrollbar>
-  <div #loadMore></div>
   <div class="wrapper">
+    @if (noMoreMessages()) {
+      <div class="badge" tuiAppearance="neutral">
+        <div tuiBadge>
+          Используйте AstushaMessage на своем телефоне, чтобы просмотреть более старые сообщения.
+        </div>
+      </div>
+    }
+
+    <div #loadMore></div>
     <div class="messages-list">
       @for (message of messages()?.items; track message.id) {
         <app-message [message]="message" />
