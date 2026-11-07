@@ -1,0 +1,51 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.button {
+  width: 100%;
+  min-width: 0;
+  height: 72px;
+  padding: 0 15px;
+  text-align: left;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+}
+
+.time {
+  font: var(--tui-typography-body-xs);
+  color: var(--tui-text-secondary);
+}
+
+.message-content {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  width: 100%;
+}
+
+.read-status {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.message-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  font: var(--tui-typography-body-s);
+  color: var(--tui-text-secondary);
+}

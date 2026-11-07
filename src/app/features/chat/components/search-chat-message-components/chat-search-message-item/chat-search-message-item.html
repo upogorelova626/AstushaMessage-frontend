@@ -1,0 +1,10 @@
+<button type="button" tuiButton appearance="flat" class="button">
+  <div class="wrapper">
+    <div class="time">{{ message().createdAt | dateTimeCustom }}</div>
+
+    <div class="message-content">
+      <tui-icon icon="@tui.check-check" class="read-status" />
+      <div class="message-text">{{ message().text }}</div>
+    </div>
+  </div>
+</button>

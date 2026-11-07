@@ -4,3 +4,4 @@ export * from './chat.interface';
 export * from './change-chat-settings.interface';
 export * from './message.interface';
 export * from './messages-list.interface';
+export * from './search-messages.interface';

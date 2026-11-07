@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { TuiButton, TuiButtonX } from '@taiga-ui/core';
+import { TuiButtonX } from '@taiga-ui/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-header',
-  imports: [TuiButton, TuiButtonX],
+  imports: [TuiButtonX],
   templateUrl: './search-header.html',
   styleUrl: './search-header.less',
   changeDetection: ChangeDetectionStrategy.OnPush,

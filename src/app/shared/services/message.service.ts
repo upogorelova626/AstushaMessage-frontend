@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import type { Message, MessagePayload } from '../interfaces';
+import type { Message, MessagePayload, SearchMessagesRequest, MessagesList } from '../interfaces';
 import type { Observable } from 'rxjs';
-import type { MessagesList } from '../interfaces/messages-list.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +34,13 @@ export class MessageService {
   editMessage(chatId: string, messageId: string, payload: MessagePayload): Observable<Message> {
     return this.http.patch<Message>(
       `${this.astushaMessengerApiUrl}/chats/${chatId}/messages/${messageId}`,
+      payload,
+    );
+  }
+
+  searchMessages(chatId: string, payload: SearchMessagesRequest): Observable<Message[]> {
+    return this.http.post<Message[]>(
+      `${this.astushaMessengerApiUrl}/chats/${chatId}/messages/search`,
       payload,
     );
   }

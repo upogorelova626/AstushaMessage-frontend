@@ -1,3 +1,17 @@
 <div class="wrapper">
-  <div class="empty-state">Поиск сообщений с {{ title() }}.</div>
+  @if (isSearching() && foundedMessages().length === 0) {
+    <div class="empty-state">Поиск сообщений с {{ title() }}.</div>
+  }
+
+  @if (foundedMessages().length === 0 && !isLoading() && !isSearching()) {
+    <div class="not-found">Сообщения не найдены</div>
+  }
+
+  @if (foundedMessages().length !== 0) {
+    <div class="search-results">
+      @for (message of foundedMessages(); track message.id) {
+        <app-chat-search-message-item [message]="message" />
+      }
+    </div>
+  }
 </div>

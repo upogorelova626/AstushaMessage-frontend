@@ -1,5 +1,7 @@
 <div class="wrapper">
   <app-search-header />
   <app-search-input />
-  <app-search-results />
+  <tui-scrollbar>
+    <app-search-results [tuiSkeleton]="isChatLoading()" />
+  </tui-scrollbar>
 </div>
