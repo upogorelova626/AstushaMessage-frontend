@@ -1,15 +1,15 @@
+@let list = messageList();
+
 <div class="wrapper">
-  @if (isSearching() && foundedMessages().length === 0) {
+  @if (isLoading() && !list) {
     <div class="empty-state">Поиск сообщений с {{ title() }}.</div>
-  }
-
-  @if (foundedMessages().length === 0 && !isLoading() && !isSearching()) {
+  } @else if (!list) {
+    <div class="empty-state">Поиск сообщений с {{ title() }}.</div>
+  } @else if (list.items.length === 0) {
     <div class="not-found">Сообщения не найдены</div>
-  }
-
-  @if (foundedMessages().length !== 0) {
+  } @else {
     <div class="search-results">
-      @for (message of foundedMessages(); track message.id) {
+      @for (message of list.items; track message.id) {
         <app-chat-search-message-item [message]="message" />
       }
     </div>

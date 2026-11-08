@@ -38,8 +38,8 @@ export class MessageService {
     );
   }
 
-  searchMessages(chatId: string, payload: SearchMessagesRequest): Observable<Message[]> {
-    return this.http.post<Message[]>(
+  searchMessages(chatId: string, payload: SearchMessagesRequest): Observable<MessagesList> {
+    return this.http.post<MessagesList>(
       `${this.astushaMessengerApiUrl}/chats/${chatId}/messages/search`,
       payload,
     );

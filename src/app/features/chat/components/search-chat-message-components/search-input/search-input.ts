@@ -14,7 +14,6 @@ import {
   tap,
 } from 'rxjs';
 import { MessageService } from '../../../../../shared/services/message.service';
-
 import { FoundedMessagesInChatService } from '../../../services/founded-messages-in-chat.service';
 
 @Component({
@@ -62,7 +61,7 @@ export class SearchInput {
 
             return this.messageService.searchMessages(chatId, { query }).pipe(
               catchError(() => {
-                return of([]);
+                return of(null);
               }),
               finalize(() => {
                 this.foundedMessagesInChatService.isLoading.set(false);
@@ -70,9 +69,9 @@ export class SearchInput {
             );
           }),
         )
-        .subscribe((messages) => {
-          if (messages !== null) {
-            this.foundedMessagesInChatService.messages.set(messages);
+        .subscribe((messagesList) => {
+          if (messagesList !== null) {
+            this.foundedMessagesInChatService.messagesList.set(messagesList);
             this.foundedMessagesInChatService.isSearching.set(false);
           }
         });

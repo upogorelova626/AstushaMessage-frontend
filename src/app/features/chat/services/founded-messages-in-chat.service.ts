@@ -1,16 +1,16 @@
 import { Injectable, signal } from '@angular/core';
-import type { Message } from '../../../shared/interfaces';
+import type { MessagesList } from '../../../shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FoundedMessagesInChatService {
-  readonly messages = signal<Message[]>([]);
+  readonly messagesList = signal<MessagesList | null>(null);
 
   readonly isSearching = signal<boolean>(false);
   readonly isLoading = signal<boolean>(false);
 
   cleanFoundedMessages(): void {
-    this.messages.set([]);
+    this.messagesList.set(null);
   }
 }

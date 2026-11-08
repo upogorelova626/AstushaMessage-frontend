@@ -16,7 +16,10 @@ export class SearchResults {
 
   protected readonly title = this.openedChatService.chatTitle;
 
-  protected readonly foundedMessages = this.foundedMessagesInChatService.messages;
+  protected readonly messageList = this.foundedMessagesInChatService.messagesList;
+
+  protected readonly foundedMessages = this.foundedMessagesInChatService.messagesList()?.items;
+
   protected readonly isSearching = this.foundedMessagesInChatService.isSearching;
   protected readonly isLoading = this.foundedMessagesInChatService.isLoading;
 }
