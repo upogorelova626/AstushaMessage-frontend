@@ -1,1 +1,49 @@
-<p>message-actions-button works!</p>
+<button
+  tuiButton
+  tuiChevron
+  type="button"
+  size="xs"
+  appearance="flat"
+  class="button"
+  [attr.aria-expanded]="open()"
+  [tuiDropdown]="dropdownContent"
+  [tuiDropdownManual]="open()"
+  [tuiObscuredEnabled]="open()"
+  (click)="onClick()"
+  (tuiActiveZoneChange)="onActiveZone($event)"
+  (tuiObscured)="onObscured($event)"
+  tuiDropdownAlign="end"
+  tuiDropdownDirection="bottom"
+>
+  <ng-template #dropdownContent>
+    <tui-data-list size="s">
+      <tui-opt-group>
+        @for (action of actions; track action.title) {
+          <button
+            tuiOption
+            type="button"
+            size="xs"
+            (click)="onSelect(action)"
+            [iconStart]="action.iconStart"
+          >
+            {{ action.title }}
+          </button>
+        }
+      </tui-opt-group>
+
+      <hr />
+
+      <tui-opt-group>
+        <button
+          tuiOption
+          type="button"
+          size="xs"
+          tuiAppearance="flat-destructive"
+          iconStart="@tui.trash"
+        >
+          Удалить
+        </button>
+      </tui-opt-group>
+    </tui-data-list>
+  </ng-template>
+</button>

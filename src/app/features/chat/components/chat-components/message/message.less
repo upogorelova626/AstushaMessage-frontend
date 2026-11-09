@@ -1,11 +1,16 @@
 :host {
   display: flex;
   flex-direction: column;
+
+  box-sizing: border-box;
   width: 100%;
+  max-width: 100%;
   min-width: 0;
 }
 
 .message {
+  position: relative;
+
   display: flex;
   flex-direction: column;
   align-self: flex-start;
@@ -27,7 +32,6 @@
 
   &_outgoing {
     align-self: flex-end;
-
     background: var(--tui-background-accent-1);
     color: var(--tui-text-primary-on-accent-1);
     border-end-end-radius: 0;
@@ -35,6 +39,7 @@
 
   &__text {
     font: var(--tui-typography-body-s);
+    white-space: pre-wrap;
     overflow-wrap: anywhere;
   }
 
@@ -56,5 +61,52 @@
     width: 16px;
     height: 16px;
     stroke-width: 1.75px;
+  }
+
+  &__actions {
+    position: absolute;
+    top: 4px;
+    z-index: 2;
+
+    display: block;
+    box-sizing: border-box;
+    width: 48px;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease,
+      visibility 150ms ease;
+
+    &_visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+  }
+
+  &_incoming &__actions {
+    left: 0;
+    padding-right: 8px;
+
+    transform: translateX(calc(-100% + 8px));
+  }
+
+  &_incoming &__actions_visible {
+    transform: translateX(-100%);
+  }
+
+  &_outgoing &__actions {
+    right: 0;
+    padding-left: 8px;
+
+    transform: translateX(calc(100% - 8px));
+  }
+
+  &_outgoing &__actions_visible {
+    transform: translateX(100%);
   }
 }

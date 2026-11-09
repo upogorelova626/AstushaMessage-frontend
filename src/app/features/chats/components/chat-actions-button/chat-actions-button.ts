@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, model } from '@angular/core';
-import { TuiObscured } from '@taiga-ui/cdk/directives/obscured';
+import { TuiActiveZone, TuiObscured } from '@taiga-ui/cdk';
 import {
   TuiAppearance,
   TuiButton,
@@ -31,6 +31,7 @@ interface Action {
     TuiOptGroup,
     TuiOption,
     TuiAppearance,
+    TuiActiveZone,
   ],
   templateUrl: './chat-actions-button.html',
   styleUrl: './chat-actions-button.less',
@@ -150,8 +151,9 @@ export class ChatActionsButton {
     action.action?.();
   }
 
-  protected onActiveZone(event: Event): void {
-    event.stopPropagation();
-    this.open.set(false);
+  protected onActiveZone(active: boolean): void {
+    if (!active) {
+      this.open.set(false);
+    }
   }
 }

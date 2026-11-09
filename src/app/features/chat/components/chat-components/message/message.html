@@ -3,6 +3,7 @@
   class="message"
   [class.message_outgoing]="message().senderId === currentUser()!.id"
   [class.message_incoming]="message().senderId !== currentUser()!.id"
+  (tuiHoveredChange)="isHovered.set($event)"
 >
   <div class="message__text">
     {{ message().text }}
@@ -17,7 +18,10 @@
       <tui-icon icon="@tui.check" class="message__read-status" />
     }
   </div>
-</div>
 
-<!-- 
-    [icon]="message().isRead ? '@tui.check-check' : '@tui.check'" -->
+  <app-message-actions-button
+    class="message__actions"
+    [class.message__actions_visible]="isHovered() || isMenuOpen()"
+    [(open)]="isMenuOpen"
+  />
+</div>

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { TuiActiveZone } from '@taiga-ui/cdk/directives/active-zone';
-import { TuiObscured } from '@taiga-ui/cdk/directives/obscured';
+import { TuiActiveZone, TuiObscured } from '@taiga-ui/cdk';
 import {
   TuiButton,
   TuiHint,
