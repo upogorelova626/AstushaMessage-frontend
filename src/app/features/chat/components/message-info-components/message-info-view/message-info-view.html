@@ -1,0 +1,5 @@
+@if (message(); as currentMessage) {
+  <div class="wrapper">
+    <app-message [message]="currentMessage" [isActionsButtonsNeeded]="isActionsButtonsNeeded()" />
+  </div>
+}

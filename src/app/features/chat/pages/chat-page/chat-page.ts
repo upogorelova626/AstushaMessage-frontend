@@ -1,12 +1,5 @@
-import type {
-  OnDestroy,
-  OnInit} from '@angular/core';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  signal,
-} from '@angular/core';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ChatHeader } from '../../components/chat-components/chat-header/chat-header';
 import { ChatMessages } from '../../components/chat-components/chat-messages/chat-messages';
 import { MessageInput } from '../../components/chat-components/message-input/message-input';

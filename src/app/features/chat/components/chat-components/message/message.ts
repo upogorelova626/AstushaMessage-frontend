@@ -19,6 +19,7 @@ export class MessageItem {
   private readonly currentUserService = inject(CurrentUserService);
 
   readonly message = input.required<Message>();
+  readonly isActionsButtonsNeeded = input<boolean>(true);
   protected readonly isHovered = model<boolean>(false);
   protected readonly isMenuOpen = model<boolean>(false);
 

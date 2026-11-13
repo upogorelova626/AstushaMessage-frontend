@@ -23,6 +23,11 @@ export const routes: Routes = [
               ),
           },
           {
+            path: ':chatId/message/:messageId',
+            loadComponent: () =>
+              import('./features/chat/pages/message-info/message-info').then((m) => m.MessageInfo),
+          },
+          {
             path: ':chatId',
             loadComponent: () =>
               import('./features/chat/pages/chat-page/chat-page').then((m) => m.ChatPage),

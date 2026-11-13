@@ -5,6 +5,7 @@ import { SideBarService } from '../../../../shared/drawer/sidebar.service';
 import { SidebarHost } from '../../../../shared/drawer/sidebar-host';
 import { RouterOutlet } from '@angular/router';
 import { ChatsStoreService } from '../../services/chats-store.service';
+import { ActionsWithMessageService } from '../../../chat/services/actions-with-message.service';
 
 @Component({
   selector: 'app-chats-page',
@@ -12,7 +13,7 @@ import { ChatsStoreService } from '../../services/chats-store.service';
   templateUrl: './chats-page.html',
   styleUrl: './chats-page.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [SideBarService],
+  providers: [SideBarService, ActionsWithMessageService],
 })
 export class ChatsPage implements OnInit {
   private readonly chatsStoreService = inject(ChatsStoreService);

@@ -1,0 +1,7 @@
+<div class="wrapper" [tuiSkeleton]="isLoading()">
+  <app-message-info-page-header [context]="context" />
+  @if (message()) {
+    <app-message-info-view [message]="message()" />
+    <app-message-info-data />
+  }
+</div>

@@ -1,0 +1,42 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 10px;
+  padding: 14px 30px 10px;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+
+  &_read {
+    color: var(--tui-text-action);
+  }
+
+  &_delivered {
+    color: var(--tui-text-secondary);
+  }
+}
+
+.text {
+  font: var(--tui-typography-body-m);
+  color: var(--tui-text-primary);
+}
+
+.date {
+  font: var(--tui-typography-body-s);
+  color: var(--tui-text-secondary);
+}

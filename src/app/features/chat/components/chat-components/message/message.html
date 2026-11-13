@@ -19,9 +19,12 @@
     }
   </div>
 
-  <app-message-actions-button
-    class="message__actions"
-    [class.message__actions_visible]="isHovered() || isMenuOpen()"
-    [(open)]="isMenuOpen"
-  />
+  @if (isActionsButtonsNeeded()) {
+    <app-message-actions-button
+      class="message__actions"
+      [class.message__actions_visible]="isHovered() || isMenuOpen()"
+      [(open)]="isMenuOpen"
+      [message]="message()"
+    />
+  }
 </div>

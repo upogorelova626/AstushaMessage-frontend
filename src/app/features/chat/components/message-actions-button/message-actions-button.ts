@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, model, signal } from '@angular/core';
 import {
   TuiAppearance,
   TuiButton,
@@ -10,6 +10,8 @@ import {
 } from '@taiga-ui/core';
 import { TuiActiveZone, TuiObscured } from '@taiga-ui/cdk';
 import { TuiChevron } from '@taiga-ui/kit';
+import { ActionsWithMessageService } from '../../services/actions-with-message.service';
+import type { Message } from '../../../../shared/interfaces';
 
 interface MessageAction {
   readonly title: string;
@@ -36,12 +38,18 @@ interface MessageAction {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageActionsButton {
+  private readonly actionsWithMessageService = inject(ActionsWithMessageService);
+
   readonly open = model<boolean>(false);
+  readonly message = input.required<Message>();
 
   protected readonly actions: readonly MessageAction[] = [
     {
       title: 'Данные о сообщении',
       iconStart: '@tui.info',
+      action: () => {
+        this.actionsWithMessageService.openMessageData(this.message());
+      },
     },
     {
       title: 'Ответить',
@@ -50,6 +58,9 @@ export class MessageActionsButton {
     {
       title: 'Копировать',
       iconStart: '@tui.copy',
+      action: () => {
+        this.actionsWithMessageService.copy(this.message().text);
+      },
     },
     {
       title: 'Отреагировать',
@@ -93,6 +104,7 @@ export class MessageActionsButton {
 
   protected onSelect(action: MessageAction): void {
     this.selected.set(action);
+    action.action?.();
     this.open.set(false);
   }
 }
