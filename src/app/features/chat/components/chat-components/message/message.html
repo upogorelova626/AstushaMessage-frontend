@@ -1,4 +1,5 @@
 <div
+  [tuiSkeleton]="isLoading()"
   tuiMessage
   class="message"
   [class.message_outgoing]="message().senderId === currentUser()!.id"

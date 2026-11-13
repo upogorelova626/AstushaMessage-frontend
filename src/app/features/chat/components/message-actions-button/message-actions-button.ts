@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, input, model, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  model,
+  signal,
+} from '@angular/core';
 import {
   TuiAppearance,
   TuiButton,
@@ -43,7 +51,7 @@ export class MessageActionsButton {
   readonly open = model<boolean>(false);
   readonly message = input.required<Message>();
 
-  protected readonly actions: readonly MessageAction[] = [
+  protected readonly actions = computed<readonly MessageAction[]>(() => [
     {
       title: 'Данные о сообщении',
       iconStart: '@tui.info',
@@ -75,14 +83,21 @@ export class MessageActionsButton {
       iconStart: '@tui.forward',
     },
     {
-      title: 'Закрепить',
+      title: this.message().isPinned ? 'Открепить' : 'Закрепить',
       iconStart: '@tui.pin',
+      action: this.message().isPinned
+        ? () => {
+            this.actionsWithMessageService.unpinMessage(this.message().id);
+          }
+        : () => {
+            this.actionsWithMessageService.pin(this.message().id);
+          },
     },
     {
       title: 'В избранное',
       iconStart: '@tui.star',
     },
-  ];
+  ]);
 
   protected readonly selected = signal<MessageAction | null>(null);
 

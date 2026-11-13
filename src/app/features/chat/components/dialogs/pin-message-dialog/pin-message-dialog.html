@@ -1,0 +1,46 @@
+<div>
+  <header class="header">Укажите срок закрепления</header>
+
+  <form [formGroup]="form" class="form">
+    <p class="description">Открепить можно в любой момент.</p>
+
+    <label tuiLabel class="label">
+      <input tuiRadio type="radio" formControlName="duration" [value]="PinMessageDuration.OneDay" />
+      24 часа
+    </label>
+
+    <label tuiLabel>
+      <input
+        tuiRadio
+        type="radio"
+        formControlName="duration"
+        [value]="PinMessageDuration.SevenDays"
+      />
+      7 дней
+    </label>
+
+    <label tuiLabel>
+      <input
+        tuiRadio
+        type="radio"
+        formControlName="duration"
+        [value]="PinMessageDuration.ThirtyDays"
+      />
+      30 дней
+    </label>
+
+    <div class="buttons">
+      <button
+        type="button"
+        size="s"
+        tuiButton
+        appearance="flat"
+        (click)="context.completeWith(false)"
+      >
+        Отмена
+      </button>
+
+      <button type="button" size="s" tuiButton (click)="pin()">Закрепить</button>
+    </div>
+  </form>
+</div>

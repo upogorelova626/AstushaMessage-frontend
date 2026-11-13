@@ -124,6 +124,23 @@ export class MessagesStoreService {
     this.isLoading.set(false);
   }
 
+  updateMessage(message: Message): void {
+    if (this.activeChatId() !== message.chatId) {
+      return;
+    }
+
+    this.messages.update((current) => {
+      if (!current) {
+        return null;
+      }
+
+      return {
+        ...current,
+        items: current.items.map((item) => (item.id === message.id ? message : item)),
+      };
+    });
+  }
+
   private updateMessages(message: Message): void {
     if (this.activeChatId() !== message.chatId) {
       return;

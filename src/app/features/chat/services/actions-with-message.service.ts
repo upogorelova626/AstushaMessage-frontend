@@ -1,6 +1,5 @@
 import { DestroyRef, inject, Injectable, Injector, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { EMPTY } from 'rxjs';
 import { OpenedChatService } from './opened-chat.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -8,13 +7,22 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SideBarService } from '../../../shared/drawer/sidebar.service';
 import { MessageInfo } from '../pages/message-info/message-info';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
-import type { Message } from '../../../shared/interfaces';
+import type { Message, PinMessageDuration } from '../../../shared/interfaces';
+import { MessageActionsService } from '../../../shared/services/message-actions.service';
+import { TuiDialogService } from '@taiga-ui/core';
+import { MessagesStoreService } from './messages-store.service';
+import { PinMessageDialog } from '../components/dialogs/pin-message-dialog/pin-message-dialog';
+import { filter, finalize, switchMap, tap } from 'rxjs';
 
 @Injectable()
 export class ActionsWithMessageService {
   private readonly breakpointObserver = inject(BreakpointObserver);
-  private readonly openedChatService = inject(OpenedChatService);
   private readonly sidebarService = inject(SideBarService);
+  private readonly dialogs = inject(TuiDialogService);
+
+  private readonly openedChatService = inject(OpenedChatService);
+  private readonly messageActionsService = inject(MessageActionsService);
+  private readonly messagesStoreService = inject(MessagesStoreService);
 
   private readonly router = inject(Router);
   private readonly clipboard = inject(Clipboard);
@@ -22,6 +30,7 @@ export class ActionsWithMessageService {
   private readonly injector = inject(Injector);
 
   private readonly isSmallScreen = signal(false);
+  readonly isLoading = signal(false);
 
   constructor() {
     this.breakpointObserver
@@ -32,32 +41,32 @@ export class ActionsWithMessageService {
       });
   }
 
-  answer() {
-    return EMPTY;
+  answer(): void {
+    return;
   }
 
-  changeFavoriteStatus() {
-    return EMPTY;
+  changeFavoriteStatus(): void {
+    return;
   }
 
-  complain() {
-    return EMPTY;
+  complain(): void {
+    return;
   }
 
   copy(text: string): void {
     this.clipboard.copy(text);
   }
 
-  deleteMessage() {
-    return EMPTY;
+  deleteMessage(): void {
+    return;
   }
 
-  download() {
-    return EMPTY;
+  download(): void {
+    return;
   }
 
-  forward() {
-    return EMPTY;
+  forward(): void {
+    return;
   }
 
   openMessageData(message: Message): void {
@@ -75,16 +84,57 @@ export class ActionsWithMessageService {
     }
   }
 
-  save() {
-    return EMPTY;
+  save(): void {
+    return;
   }
 
-  pin() {
-    return EMPTY;
+  pin(messageId: string): void {
+    const chatId = this.openedChatService.chat()?.id;
+
+    if (!chatId || this.isLoading()) {
+      return;
+    }
+
+    this.dialogs
+      .open<PinMessageDuration | false>(new PolymorpheusComponent(PinMessageDialog), { size: 's' })
+      .pipe(
+        filter((duration): duration is PinMessageDuration => duration !== false),
+
+        switchMap((duration) => {
+          this.isLoading.set(true);
+
+          return this.messageActionsService
+            .pinMessage(chatId, messageId, { duration: duration })
+            .pipe(finalize(() => this.isLoading.set(false)));
+        }),
+
+        tap((message) => {
+          this.messagesStoreService.updateMessage(message);
+        }),
+      )
+      .subscribe();
   }
 
-  react() {
-    return EMPTY;
+  react(): void {
+    return;
+  }
+
+  unpinMessage(messageId: string): void {
+    const chatId = this.openedChatService.chat()?.id;
+
+    if (!chatId) {
+      return;
+    }
+
+    this.isLoading.set(true);
+
+    this.messageActionsService
+      .unpinMessage(chatId, messageId)
+      .pipe()
+      .subscribe((message) => {
+        this.messagesStoreService.updateMessage(message);
+        this.isLoading.set(false);
+      });
   }
 
   private openMessageInfo(messageId: string): void {

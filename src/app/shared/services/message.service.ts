@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import type { Message, MessagePayload, SearchMessagesRequest, MessagesList } from '../interfaces';
+import type {
+  Message,
+  NewMessagePayload,
+  SearchMessagesRequest,
+  MessagesList,
+} from '../interfaces';
 import type { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,7 +16,7 @@ export class MessageService {
 
   private readonly astushaMessengerApiUrl = 'http://localhost:3005';
 
-  sendNewMessage(chatId: string, payload: MessagePayload): Observable<Message> {
+  sendNewMessage(chatId: string, payload: NewMessagePayload): Observable<Message> {
     return this.http.post<Message>(
       `${this.astushaMessengerApiUrl}/chats/${chatId}/messages`,
       payload,
@@ -31,7 +36,7 @@ export class MessageService {
     );
   }
 
-  editMessage(chatId: string, messageId: string, payload: MessagePayload): Observable<Message> {
+  editMessage(chatId: string, messageId: string, payload: NewMessagePayload): Observable<Message> {
     return this.http.patch<Message>(
       `${this.astushaMessengerApiUrl}/chats/${chatId}/messages/${messageId}`,
       payload,
