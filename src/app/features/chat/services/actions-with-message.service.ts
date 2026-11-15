@@ -13,6 +13,7 @@ import { TuiDialogService } from '@taiga-ui/core';
 import { MessagesStoreService } from './messages-store.service';
 import { PinMessageDialog } from '../components/dialogs/pin-message-dialog/pin-message-dialog';
 import { filter, finalize, switchMap, tap } from 'rxjs';
+import { PinnedMessagesStoreService } from './pinned-messages-store.service';
 
 @Injectable()
 export class ActionsWithMessageService {
@@ -23,6 +24,7 @@ export class ActionsWithMessageService {
   private readonly openedChatService = inject(OpenedChatService);
   private readonly messageActionsService = inject(MessageActionsService);
   private readonly messagesStoreService = inject(MessagesStoreService);
+  private readonly pinnedMessagesStoreService = inject(PinnedMessagesStoreService);
 
   private readonly router = inject(Router);
   private readonly clipboard = inject(Clipboard);
@@ -110,6 +112,7 @@ export class ActionsWithMessageService {
 
         tap((message) => {
           this.messagesStoreService.updateMessage(message);
+          this.pinnedMessagesStoreService.refreshPinnedMessages();
         }),
       )
       .subscribe();
@@ -122,7 +125,7 @@ export class ActionsWithMessageService {
   unpinMessage(messageId: string): void {
     const chatId = this.openedChatService.chat()?.id;
 
-    if (!chatId) {
+    if (!chatId || this.isLoading()) {
       return;
     }
 
@@ -130,11 +133,14 @@ export class ActionsWithMessageService {
 
     this.messageActionsService
       .unpinMessage(chatId, messageId)
-      .pipe()
-      .subscribe((message) => {
-        this.messagesStoreService.updateMessage(message);
-        this.isLoading.set(false);
-      });
+      .pipe(
+        finalize(() => this.isLoading.set(false)),
+        tap((message) => {
+          this.messagesStoreService.updateMessage(message);
+          this.pinnedMessagesStoreService.refreshPinnedMessages();
+        }),
+      )
+      .subscribe();
   }
 
   private openMessageInfo(messageId: string): void {
