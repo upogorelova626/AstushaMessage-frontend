@@ -17,7 +17,9 @@ export class MessagesStoreService {
   private requestVersion = 0;
 
   public readonly messages = signal<MessagesList | null>(null);
+
   public readonly isLoading = signal(false);
+
   public activeChatId = signal<string | null>(null);
 
   public noMoreMessages = computed(() => {

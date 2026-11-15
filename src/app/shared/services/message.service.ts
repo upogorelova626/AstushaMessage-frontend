@@ -5,6 +5,7 @@ import type {
   NewMessagePayload,
   SearchMessagesRequest,
   MessagesList,
+  PinnedMessage,
 } from '../interfaces';
 import type { Observable } from 'rxjs';
 
@@ -33,6 +34,12 @@ export class MessageService {
     return this.http.post<MessagesList>(
       `${this.astushaMessengerApiUrl}/chats/${chatId}/messages/list`,
       { cursor: cursor ?? null },
+    );
+  }
+
+  getPinnedMessages(chatId: string): Observable<PinnedMessage[]> {
+    return this.http.get<PinnedMessage[]>(
+      `${this.astushaMessengerApiUrl}/chats/${chatId}/messages/pinned`,
     );
   }
 

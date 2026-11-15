@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.carousel {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.wrapper {
+  display: flex;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+
+  height: 50px;
+  padding-left: 16px;
+  padding-right: 28px;
+  align-items: center;
+
+  border-radius: 0;
+
+  background-color: var(--tui-background-base-alt);
+}
+
+.icon {
+  flex-shrink: 0;
+  font-size: 20px;
+  color: var(--tui-text-secondary);
+  display: flex;
+  justify-content: flex-start;
+}
+
+.text {
+  min-width: 0;
+  padding-left: 14px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: var(--tui-text-secondary);
+  font: var(--tui-typography-body-s);
+}

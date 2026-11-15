@@ -10,10 +10,12 @@ import { ActivatedRoute } from '@angular/router';
 import { TuiNotificationService } from '@taiga-ui/core';
 import { MessagesSocketService } from '../../../../shared/services/messages-socket.service';
 import { MessagesStoreService } from '../../services/messages-store.service';
+import { ChatPinnedMessages } from '../../components/chat-components/chat-pinned-messages/chat-pinned-messages';
+import { PinnedMessagesStoreService } from '../../services/pinned-messages-store.service';
 
 @Component({
   selector: 'app-chat-page',
-  imports: [ChatHeader, ChatMessages, MessageInput],
+  imports: [ChatHeader, ChatMessages, MessageInput, ChatPinnedMessages],
   templateUrl: './chat-page.html',
   styleUrl: './chat-page.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,6 +27,7 @@ export class ChatPage implements OnInit, OnDestroy {
   private readonly chatService = inject(ChatService);
   private readonly openedChatService = inject(OpenedChatService);
   private readonly messageStoreService = inject(MessagesStoreService);
+  private readonly pinnedMessagesStoreService = inject(PinnedMessagesStoreService);
   private readonly messagesSocketService = inject(MessagesSocketService);
 
   protected readonly isChatLoading = signal<boolean>(false);
@@ -53,6 +56,7 @@ export class ChatPage implements OnInit, OnDestroy {
         this.openedChatService.setChat(chat);
 
         this.messageStoreService.activeChatId.set(chatId);
+        this.pinnedMessagesStoreService.activeChatId.set(chatId);
         this.messageStoreService.getMessages();
 
         this.messagesSocketService.joinChat(chat.id);
@@ -63,5 +67,6 @@ export class ChatPage implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.messageStoreService.cleanMessages();
+    this.pinnedMessagesStoreService.cleanPinnedMessages();
   }
 }

@@ -1,0 +1,31 @@
+<tui-carousel
+  class="carousel"
+  #carousel
+  [max]="max()"
+  [min]="0"
+  [(index)]="index"
+  [tuiSkeleton]="isPinnedMessagesLoading()"
+  (tuiHoveredChange)="isButtonVisible.set($event)"
+  (tuiHoveredChange)="open.set($event)"
+>
+  <button
+    type="button"
+    tuiButton
+    *tuiItem="let itemIndex"
+    class="wrapper"
+    (click)="nextPinnedMessage()"
+  >
+    <tui-icon icon="@tui.pin" class="icon" />
+
+    <div class="text">
+      {{ pinnedMessages()[itemIndex]?.message?.text }}
+    </div>
+
+    @if (isButtonVisible() || open()) {
+      <app-actions-with-pinned-messages-button
+        [(open)]="open"
+        [message]="pinnedMessages()[itemIndex].message"
+      />
+    }
+  </button>
+</tui-carousel>

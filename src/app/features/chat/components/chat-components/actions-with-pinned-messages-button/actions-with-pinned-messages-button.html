@@ -1,0 +1,30 @@
+<button
+  class="button-round"
+  tuiButton
+  appearance="flat"
+  iconStart="@tui.chevron-down"
+  type="button"
+  [attr.aria-expanded]="open()"
+  [tuiDropdown]="dropdownContent"
+  [tuiDropdownManual]="open()"
+  [tuiObscuredEnabled]="open()"
+  (click)="onClick($event)"
+  (tuiActiveZoneChange)="onActiveZone($event)"
+  (tuiObscured)="onObscured($event)"
+>
+  <ng-template #dropdownContent>
+    <tui-data-list size="s">
+      @for (action of actions; track action.title) {
+        <button
+          tuiOption
+          type="button"
+          tuiAppearance="flat"
+          [iconStart]="action.iconStart"
+          (click)="onSelect(action)"
+        >
+          {{ action.title }}
+        </button>
+      }
+    </tui-data-list>
+  </ng-template>
+</button>

@@ -20,6 +20,15 @@ export interface Message {
   deletedAt: string | null;
 }
 
+export interface PinnedMessage {
+  messageId: string;
+  chatId: string;
+  pinnedById: string;
+  pinnedAt: string;
+  expiresAt: string | null;
+  message: Message;
+}
+
 export interface NewMessagePayload {
   text: string;
 }

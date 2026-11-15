@@ -15,6 +15,10 @@
       {{ message().createdAt | date: 'HH:mm' }}
     </span>
 
+    @if (message().isPinned) {
+      <tui-icon icon="@tui.pin" class="message__pin-status" />
+    }
+
     @if (message().senderId === currentUser()!.id) {
       <tui-icon icon="@tui.check" class="message__read-status" />
     }
