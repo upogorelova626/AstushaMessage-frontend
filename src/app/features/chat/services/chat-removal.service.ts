@@ -1,7 +1,7 @@
 import type { Type } from '@angular/core';
 import { computed, inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { TuiDialogService, TuiNotificationService } from '@taiga-ui/core';
+import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { catchError, EMPTY, tap } from 'rxjs';
 
@@ -10,6 +10,7 @@ import { ChatsStoreService } from '../../chats/services/chats-store.service';
 import { ChatManagementService } from '../../../shared/services/chat-management.service';
 import { ClearChatConfirmationDialog } from '../../../shared/components/clear-chat-confirmation-dialog/clear-chat-confirmation-dialog';
 import { DeleteChatConfirmationDialog } from '../../../shared/components/delete-chat-confirmation-dialog/delete-chat-confirmation-dialog';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 export interface CleanOrDeleteChatParametrs {
   chatIsOpen: boolean;
@@ -24,9 +25,9 @@ export class ChatRemovalService {
   private readonly openedChatService = inject(OpenedChatService);
   private readonly chatsStoreService = inject(ChatsStoreService);
   private readonly chatManagementService = inject(ChatManagementService);
+  private readonly notificationService = inject(NotificationService);
 
   private readonly dialogs = inject(TuiDialogService);
-  private readonly alerts = inject(TuiNotificationService);
   private readonly router = inject(Router);
 
   private readonly chatId = computed(() => this.openedChatService.chat()?.id);
@@ -73,10 +74,10 @@ export class ChatRemovalService {
         request$
           .pipe(
             tap(() => {
-              this.openPositiveAlert(isDeleting ? 'Чат удалён' : 'Чат очищен');
+              this.notificationService.openPositiveAlert(isDeleting ? 'Чат удалён' : 'Чат очищен');
             }),
             catchError(() => {
-              this.openNegativeAlert(
+              this.notificationService.openNegativeAlert(
                 isDeleting ? 'Не удалось удалить чат' : 'Не удалось очистить чат',
               );
 
@@ -92,25 +93,5 @@ export class ChatRemovalService {
             }
           });
       });
-  }
-
-  private openPositiveAlert(text: string): void {
-    this.alerts
-      .open(text, {
-        appearance: 'positive',
-        block: 'end',
-        inline: 'start',
-      })
-      .subscribe();
-  }
-
-  private openNegativeAlert(text: string): void {
-    this.alerts
-      .open(text, {
-        appearance: 'negative',
-        block: 'end',
-        inline: 'start',
-      })
-      .subscribe();
   }
 }

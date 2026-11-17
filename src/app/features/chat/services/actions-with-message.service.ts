@@ -9,23 +9,24 @@ import { MessageInfo } from '../pages/message-info/message-info';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import type { Message, PinMessageDuration } from '../../../shared/interfaces';
 import { MessageActionsService } from '../../../shared/services/message-actions.service';
-import { TuiDialogService, TuiNotificationService } from '@taiga-ui/core';
+import { TuiDialogService } from '@taiga-ui/core';
 import { MessagesStoreService } from './messages-store.service';
 import { PinMessageDialog } from '../components/dialogs/pin-message-dialog/pin-message-dialog';
 import { catchError, EMPTY, filter, finalize, switchMap, tap } from 'rxjs';
 import { PinnedMessagesStoreService } from './pinned-messages-store.service';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Injectable()
 export class ActionsWithMessageService {
   private readonly breakpointObserver = inject(BreakpointObserver);
   private readonly sidebarService = inject(SideBarService);
   private readonly dialogs = inject(TuiDialogService);
-  private readonly alerts = inject(TuiNotificationService);
 
   private readonly openedChatService = inject(OpenedChatService);
   private readonly messageActionsService = inject(MessageActionsService);
   private readonly messagesStoreService = inject(MessagesStoreService);
   private readonly pinnedMessagesStoreService = inject(PinnedMessagesStoreService);
+  private readonly notificationService = inject(NotificationService);
 
   private readonly router = inject(Router);
   private readonly clipboard = inject(Clipboard);
@@ -63,14 +64,14 @@ export class ActionsWithMessageService {
       .changeMessageFavoriteStatus(chatId, messageId, payload)
       .pipe(
         tap(() =>
-          this.openPositiveAlert(
+          this.notificationService.openPositiveAlert(
             isFavorite
               ? '1 сообщение добавлено в "Избранные"'
               : '1 сообщение удалено из "Избранных"',
           ),
         ),
         catchError(() => {
-          this.openNegativeAlert(
+          this.notificationService.openNegativeAlert(
             isFavorite
               ? 'Не удалось добавить сообщение "Избранные"'
               : 'Не удалось удалить сообщение из "Избранных"',
@@ -193,26 +194,6 @@ export class ActionsWithMessageService {
         },
         { chatId, messageId },
       )
-      .subscribe();
-  }
-
-  private openPositiveAlert(text: string): void {
-    this.alerts
-      .open(text, {
-        appearance: 'positive',
-        block: 'end',
-        inline: 'start',
-      })
-      .subscribe();
-  }
-
-  private openNegativeAlert(text: string): void {
-    this.alerts
-      .open(text, {
-        appearance: 'negative',
-        block: 'end',
-        inline: 'start',
-      })
       .subscribe();
   }
 }
