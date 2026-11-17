@@ -94,8 +94,21 @@ export class MessageActionsButton {
           },
     },
     {
-      title: 'В избранное',
+      title: this.message().isFavorite ? 'Удалить из "Избранных"' : 'В "Избранные"',
       iconStart: '@tui.star',
+      action: this.message().isFavorite
+        ? () => {
+            this.actionsWithMessageService.changeFavoriteStatus(
+              this.message().id,
+              !this.message().isFavorite,
+            );
+          }
+        : () => {
+            this.actionsWithMessageService.changeFavoriteStatus(
+              this.message().id,
+              !this.message().isFavorite,
+            );
+          },
     },
   ]);
 

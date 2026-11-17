@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import type { Message, PinMessagePayload } from '../interfaces';
+import type { ChangeFavoriteStatusPayload, Message, PinMessagePayload } from '../interfaces';
 import type { Observable } from 'rxjs';
 
 @Injectable({
@@ -21,6 +21,17 @@ export class MessageActionsService {
   unpinMessage(chatId: string, messageId: string): Observable<Message> {
     return this.http.delete<Message>(
       `${this.astushaMessengerApiUrl}/chats/${chatId}/messages/${messageId}/pin`,
+    );
+  }
+
+  changeMessageFavoriteStatus(
+    chatId: string,
+    messageId: string,
+    payload: ChangeFavoriteStatusPayload,
+  ): Observable<Message> {
+    return this.http.patch<Message>(
+      `${this.astushaMessengerApiUrl}/chats/${chatId}/messages/${messageId}/favorite`,
+      payload,
     );
   }
 }

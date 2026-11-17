@@ -15,6 +15,8 @@ export interface Message {
   pinnedUntil: string | null;
   pinnedById: string | null;
 
+  isFavorite: boolean;
+
   createdAt: string;
   editedAt: string | null;
   deletedAt: string | null;
@@ -35,4 +37,8 @@ export interface NewMessagePayload {
 
 export interface PinMessagePayload {
   duration: PinMessageDuration;
+}
+
+export interface ChangeFavoriteStatusPayload {
+  isFavorite: boolean;
 }
