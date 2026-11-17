@@ -1,6 +1,6 @@
 <div class="wrapper">
   <app-chat-header class="header" [isChatLoading]="isChatLoading()" />
-  <app-chat-pinned-messages />
+  <app-chat-pinned-messages [tuiSkeleton]="isChatLoading()" />
   <app-chat-messages class="messages" />
   <app-message-input class="input" />
 </div>

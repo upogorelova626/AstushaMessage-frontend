@@ -12,10 +12,11 @@ import { MessagesSocketService } from '../../../../shared/services/messages-sock
 import { MessagesStoreService } from '../../services/messages-store.service';
 import { ChatPinnedMessages } from '../../components/chat-components/chat-pinned-messages/chat-pinned-messages';
 import { PinnedMessagesStoreService } from '../../services/pinned-messages-store.service';
+import { TuiSkeleton } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-chat-page',
-  imports: [ChatHeader, ChatMessages, MessageInput, ChatPinnedMessages],
+  imports: [ChatHeader, ChatMessages, MessageInput, ChatPinnedMessages, TuiSkeleton],
   templateUrl: './chat-page.html',
   styleUrl: './chat-page.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,6 +32,7 @@ export class ChatPage implements OnInit, OnDestroy {
   private readonly messagesSocketService = inject(MessagesSocketService);
 
   protected readonly isChatLoading = signal<boolean>(false);
+  protected readonly pinnedMessages = this.pinnedMessagesStoreService.pinnedMessages;
 
   ngOnInit(): void {
     const chatId = this.route.snapshot.paramMap.get('chatId');
