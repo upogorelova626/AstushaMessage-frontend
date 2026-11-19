@@ -1,0 +1,42 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 0;
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: 49px;
+  height: 49px;
+  border-radius: 50%;
+}
+
+.title,
+.message {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.title {
+  font: var(--tui-typography-body-m);
+  font-weight: 500;
+  color: var(--tui-text-primary);
+}
+
+.message {
+  font: var(--tui-typography-body-s);
+  font-weight: 400;
+  color: var(--tui-text-secondary);
+}
