@@ -1,0 +1,57 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 8px;
+}
+
+.button-round {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.title {
+  font: var(--tui-typography-body-m);
+  font-weight: 400;
+  color: var(--tui-text-primary);
+}
+
+.textfield {
+  display: flex;
+  margin: 0 24px;
+}
+
+.name-input {
+  width: 100%;
+}
+
+.included {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 16px 0;
+  gap: 10px;
+}
+
+.included-title {
+  font: var(--tui-typography-body-s);
+  font-weight: 600;
+  color: var(--tui-text-primary);
+}
+
+.add-chats-button {
+  align-self: flex-start;
+}
+
+.create-button {
+  align-self: flex-start;
+  margin: 40px 0 16px 26px;
+}

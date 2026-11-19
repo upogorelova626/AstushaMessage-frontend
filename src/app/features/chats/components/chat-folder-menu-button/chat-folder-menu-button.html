@@ -1,0 +1,28 @@
+<button
+  tuiButton
+  tuiChevron
+  type="button"
+  appearance="outline"
+  size="s"
+  aria-label="Другие фильтры"
+  tuiHint="Больше списков"
+  tuiHintAppearance="floating"
+  tuiHintDirection="bottom"
+  [attr.aria-expanded]="open()"
+  [tuiDropdown]="dropdownContent"
+  [tuiDropdownManual]="open()"
+  [tuiObscuredEnabled]="open()"
+  (click)="onClick()"
+  (tuiActiveZoneChange)="onActiveZone($event)"
+  (tuiObscured)="onObscured($event)"
+>
+  <ng-template #dropdownContent>
+    <tui-data-list size="s">
+      <button tuiOption type="button" iconStart="@tui.plus" (click)="createNewList()">
+        <span tuiTitle>
+          {{ 'Новый список' }}
+        </span>
+      </button>
+    </tui-data-list>
+  </ng-template>
+</button>

@@ -21,8 +21,8 @@ export class MessageInputAttachButton {
     { title: 'Фото и видео', iconStart: '@tui.images' },
     { title: 'Камера', iconStart: '@tui.camera' },
     { title: 'Аудио', iconStart: '@tui.headphones' },
-    { title: 'Контакт', iconStart: '@tui.thumbs-down' },
-    { title: 'Опрос', iconStart: '@tui.user' },
+    { title: 'Контакт', iconStart: '@tui.user' },
+    { title: 'Опрос', iconStart: '@tui.text-align-start' },
     { title: 'Мероприятие', iconStart: '@tui.calendar-days' },
     { title: 'Новый стикер', iconStart: '@tui.sticker' },
   ];

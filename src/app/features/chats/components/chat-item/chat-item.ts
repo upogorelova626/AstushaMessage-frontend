@@ -8,10 +8,11 @@ import { ChatType } from '../../../../shared/interfaces';
 import { CurrentUserService } from '../../../../shared/services/current-user.service';
 import { ChatActionsButton } from '../chat-actions-button/chat-actions-button';
 import { TuiHovered } from '@taiga-ui/cdk/directives/hovered';
+import { DateTimeCustomPipe } from '../../../../shared/pipes/date-time-custom-pipe';
 
 @Component({
   selector: 'app-chat-item',
-  imports: [TuiButton, TuiAvatar, TuiIcon, TuiHovered, ChatActionsButton],
+  imports: [TuiButton, TuiAvatar, TuiIcon, TuiHovered, ChatActionsButton, DateTimeCustomPipe],
   templateUrl: './chat-item.html',
   styleUrl: './chat-item.less',
   changeDetection: ChangeDetectionStrategy.OnPush,

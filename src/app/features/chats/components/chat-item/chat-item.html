@@ -18,7 +18,7 @@
   </div>
 
   <div class="meta-containers">
-    <div class="time">11:20</div>
+    <div class="time">{{ chat().lastMessage.createdAt | dateTimeCustom }}</div>
 
     <div class="meta">
       @if (chat().settings.isPinned) {
