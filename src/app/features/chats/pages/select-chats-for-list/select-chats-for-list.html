@@ -1,0 +1,31 @@
+<tui-textfield class="textfield">
+  <input
+    type="text"
+    tuiInput
+    placeholder="Поиск по имени или названию чата"
+    [formControl]="filterInput"
+  />
+</tui-textfield>
+
+@if (filteredChats().length > 0) {
+  <div class="description">Все чаты</div>
+
+  <tui-scrollbar class="scrollbar">
+    <div class="items">
+      @for (chat of filteredChats(); track chat.id) {
+        <div class="chat-item">
+          <input type="checkbox" tuiCheckbox />
+          <app-chat-preview [chat]="chat" />
+        </div>
+      }
+    </div>
+  </tui-scrollbar>
+} @else {
+  <div class="empty">
+    <img class="image" src="/not-found-chats-img.png" alt="Чаты не найдены" />
+
+    <div class="empty-text">Чаты не найдены</div>
+  </div>
+}
+
+<button type="button" tuiButton iconStart="@tui.check" class="button-round"></button>
