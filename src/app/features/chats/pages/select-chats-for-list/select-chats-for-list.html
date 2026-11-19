@@ -7,16 +7,28 @@
   />
 </tui-textfield>
 
+<div class="added-chats">
+  @for (chat of addedChats(); track chat.id) {
+    <app-selected-chat-chip [chat]="chat" (remove)="toggleChat(chat)" />
+  }
+</div>
+
 @if (filteredChats().length > 0) {
   <div class="description">Все чаты</div>
 
   <tui-scrollbar class="scrollbar">
     <div class="items">
       @for (chat of filteredChats(); track chat.id) {
-        <div class="chat-item">
-          <input type="checkbox" tuiCheckbox />
+        <button
+          tuiButton
+          appearance="flat"
+          type="button"
+          class="chat-item"
+          (click)="toggleChat(chat)"
+        >
+          <input type="checkbox" tuiCheckbox [checked]="addedChats().includes(chat)" />
           <app-chat-preview [chat]="chat" />
-        </div>
+        </button>
       }
     </div>
   </tui-scrollbar>
@@ -28,4 +40,10 @@
   </div>
 }
 
-<button type="button" tuiButton iconStart="@tui.check" class="button-round"></button>
+<button
+  type="button"
+  tuiButton
+  iconStart="@tui.check"
+  class="button-round"
+  (click)="save()"
+></button>

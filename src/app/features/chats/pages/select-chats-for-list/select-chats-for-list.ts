@@ -1,12 +1,23 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { TuiCheckbox, TuiInput, TuiTextfield, TuiButton, TuiScrollbar } from '@taiga-ui/core';
+import {
+  TuiCheckbox,
+  TuiInput,
+  TuiTextfield,
+  TuiButton,
+  TuiScrollbar,
+  type TuiDialogContext,
+} from '@taiga-ui/core';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 
 import { CurrentUserService } from '../../../../shared/services/current-user.service';
 import { ChatPreview } from '../../components/chat-preview/chat-preview';
 import { ChatsStoreService } from '../../services/chats-store.service';
+
+import { injectContext } from '@taiga-ui/polymorpheus';
+import type { Chat } from '../../../../shared/interfaces';
+import { SelectedChatChip } from '../../components/selected-chat-chip/selected-chat-chip';
 
 @Component({
   selector: 'app-select-chats-for-list',
@@ -18,6 +29,7 @@ import { ChatsStoreService } from '../../services/chats-store.service';
     ReactiveFormsModule,
     TuiButton,
     TuiScrollbar,
+    SelectedChatChip,
   ],
   templateUrl: './select-chats-for-list.html',
   styleUrl: './select-chats-for-list.less',
@@ -28,6 +40,9 @@ export class SelectChatsForList {
   private readonly currentUserService = inject(CurrentUserService);
 
   private readonly currentUser = toSignal(this.currentUserService.currentUser$);
+  protected readonly addedChats = signal<Chat[]>([]);
+
+  protected readonly context = injectContext<TuiDialogContext<Chat[], void>>();
 
   protected readonly chats = this.chatsStoreService.chats;
 
@@ -72,4 +87,14 @@ export class SelectChatsForList {
       return titleMatches || participantMatches;
     });
   });
+
+  protected toggleChat(chat: Chat): void {
+    this.addedChats.update((chats) =>
+      chats.includes(chat) ? chats.filter((id) => id !== chat) : [...chats, chat],
+    );
+  }
+
+  protected save(): void {
+    this.context.completeWith(this.addedChats());
+  }
 }
