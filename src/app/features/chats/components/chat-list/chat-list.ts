@@ -18,6 +18,6 @@ import { TuiSkeleton } from '@taiga-ui/kit';
 export class ChatList {
   private readonly chatsStoreService = inject(ChatsStoreService);
 
-  protected readonly chats = this.chatsStoreService.chats;
+  protected readonly chats = this.chatsStoreService.filteredChats;
   protected readonly isLoading = this.chatsStoreService.isLoading;
 }

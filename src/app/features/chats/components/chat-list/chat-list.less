@@ -1,25 +1,30 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
+  flex: 0 0 clamp(335px, 30vw, 500px);
 
   gap: 10px;
 
   box-sizing: border-box;
-  width: clamp(336px, 30vw, 575px);
+  width: clamp(335px, 30vw, 500px);
+  min-width: 335px;
+  max-width: 500px;
   height: 100dvh;
+  overflow: hidden;
 
   border-right: 1px solid var(--tui-border-normal);
   background-color: var(--tui-background-base);
 
   @media (max-width: 1199px) {
+    flex-basis: 336px;
     width: 336px;
   }
 
   @media (max-width: 900px) {
-    flex: 1;
+    flex: 1 1 100%;
     width: 100%;
     min-width: 0;
+    max-width: none;
     border-right: none;
   }
 }
@@ -28,5 +33,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  min-width: 0;
   padding: 0 10px;
 }

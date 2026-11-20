@@ -85,7 +85,7 @@ export class ChatRemovalService {
             }),
           )
           .subscribe(() => {
-            this.chatsStoreService.getAllChats();
+            this.chatsStoreService.loadChatsAndFolders();
 
             if (isDeleting && this.chatId() === chatId) {
               this.openedChatService.clearChat();

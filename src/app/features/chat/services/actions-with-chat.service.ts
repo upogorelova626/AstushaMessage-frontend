@@ -45,7 +45,7 @@ export class ActionsWithChatService {
         }),
       )
       .subscribe((chat) => {
-        this.chatsStoreService.getAllChats();
+        this.chatsStoreService.loadChatsAndFolders();
 
         if (this.chatId() === chat.id) {
           this.openedChatService.setChat(chat);
@@ -85,7 +85,7 @@ export class ActionsWithChatService {
         }),
       )
       .subscribe((chat) => {
-        this.chatsStoreService.getAllChats();
+        this.chatsStoreService.loadChatsAndFolders();
 
         if (this.chatId() === chat.id) {
           this.openedChatService.setChat(chat);
@@ -117,7 +117,7 @@ export class ActionsWithChatService {
         }),
       )
       .subscribe((chat) => {
-        this.chatsStoreService.getAllChats();
+        this.chatsStoreService.loadChatsAndFolders();
 
         if (this.chatId() === chat.id) {
           this.openedChatService.setChat(chat);
@@ -164,7 +164,7 @@ export class ActionsWithChatService {
         }),
       )
       .subscribe((chat) => {
-        this.chatsStoreService.getAllChats();
+        this.chatsStoreService.loadChatsAndFolders();
 
         if (this.chatId() === chat.id) {
           this.openedChatService.setChat(chat);

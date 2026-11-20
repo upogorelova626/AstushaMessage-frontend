@@ -19,6 +19,6 @@ export class ChatsPage implements OnInit {
   private readonly chatsStoreService = inject(ChatsStoreService);
 
   ngOnInit(): void {
-    this.chatsStoreService.getAllChats();
+    this.chatsStoreService.loadChatsAndFolders();
   }
 }

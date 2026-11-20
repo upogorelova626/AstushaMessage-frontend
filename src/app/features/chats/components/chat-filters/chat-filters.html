@@ -1,7 +1,35 @@
-<div class="wrapper">
-  <button tuiButton type="button" appearance="primary" size="s">Все</button>
+<div class="filters">
+  <button
+    tuiButton
+    type="button"
+    [appearance]="chatFilter() === 'all' ? 'primary' : 'outline'"
+    size="s"
+    (click)="changeFilterValue('all')"
+  >
+    Все
+  </button>
 
-  <button tuiButton type="button" appearance="outline" size="s">Избранное</button>
+  <button
+    tuiButton
+    type="button"
+    [appearance]="chatFilter() === 'favourites' ? 'primary' : 'outline'"
+    size="s"
+    (click)="changeFilterValue('favourites')"
+  >
+    Избранное
+  </button>
 
-  <app-chat-folder-menu-button />
+  @for (list of chatLists(); track list.id) {
+    <button
+      tuiButton
+      type="button"
+      [appearance]="chatFilter() === list.id ? 'primary' : 'outline'"
+      size="s"
+      (click)="changeFilterValue(list.id)"
+    >
+      {{ list.name }}
+    </button>
+  }
 </div>
+
+<app-chat-folder-menu-button />

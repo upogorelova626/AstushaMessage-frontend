@@ -1,7 +1,7 @@
-<div class="wrapper" [tuiSkeleton]="isLoading()">
+<div class="wrapper">
   <app-header />
   <app-chat-search />
-  <app-chat-filters />
+  <app-chat-filters [tuiSkeleton]="isLoading()" />
   <app-closed-chats />
   <app-archived-chats />
 

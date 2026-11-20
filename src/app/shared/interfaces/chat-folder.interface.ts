@@ -8,4 +8,5 @@ export interface ChatFolder {
   name: string;
   createdAt: string;
   updatedAt: string;
+  items: { chatId: string }[];
 }
