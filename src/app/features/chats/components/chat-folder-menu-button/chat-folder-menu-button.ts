@@ -5,6 +5,7 @@ import { TuiChevron } from '@taiga-ui/kit';
 import { SideBarService } from '../../../../shared/drawer/sidebar.service';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { CreteNewFolderPage } from '../../pages/crete-new-folder-page/crete-new-folder-page';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-chat-folder-menu-button',
@@ -28,6 +29,7 @@ export class ChatFolderMenuButton {
 
   private readonly injector = inject(Injector);
 
+  private readonly isDrawerOpen = signal(false);
   protected readonly open = signal(false);
 
   protected onClick(): void {
@@ -51,6 +53,12 @@ export class ChatFolderMenuButton {
   }
 
   protected createNewList(): void {
+    if (this.isDrawerOpen()) {
+      return;
+    }
+
+    this.isDrawerOpen.set(true);
+
     this.sidebarService
       .open$<CreteNewFolderPage, null>(
         new PolymorpheusComponent(CreteNewFolderPage, this.injector),
@@ -62,6 +70,7 @@ export class ChatFolderMenuButton {
           direction: 'start',
         },
       )
+      .pipe(finalize(() => this.isDrawerOpen.set(false)))
       .subscribe();
   }
 }

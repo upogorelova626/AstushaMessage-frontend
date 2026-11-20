@@ -54,7 +54,9 @@ export class CreteNewFolderPage {
         label: 'Добавление в список',
         size: 's',
       })
-      .subscribe((chats) => this.addedChats.set(chats));
+      .subscribe((chats) => {
+        this.addedChats.set(chats);
+      });
   }
 
   protected createList(): void {
