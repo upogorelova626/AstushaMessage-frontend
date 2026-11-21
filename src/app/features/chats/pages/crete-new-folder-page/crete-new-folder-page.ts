@@ -5,7 +5,7 @@ import {
   TuiDialogService,
   TuiInput,
   TuiTextfield,
-  TuiErrorComponent,
+  TuiError,
 } from '@taiga-ui/core';
 import { injectContext, PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { SelectChatsForList } from '../select-chats-for-list/select-chats-for-list';
@@ -16,10 +16,11 @@ import { ChatFolderService } from '../../../../shared/services/chat-folder.servi
 import type { BarContext } from '../../../../shared/drawer/base-bar.service';
 import { NotificationService } from '../../../../shared/services/notification.service';
 import { catchError, EMPTY, finalize } from 'rxjs';
+import { UnsavedChangesDialog } from '../../components/unsaved-changes-dialog/unsaved-changes-dialog';
 
 @Component({
   selector: 'app-crete-new-folder-page',
-  imports: [TuiButton, TuiTextfield, TuiInput, ChatPreview, ReactiveFormsModule, TuiErrorComponent],
+  imports: [TuiButton, TuiTextfield, TuiInput, ChatPreview, ReactiveFormsModule, TuiError],
   templateUrl: './crete-new-folder-page.html',
   styleUrl: './crete-new-folder-page.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,6 +30,9 @@ import { catchError, EMPTY, finalize } from 'rxjs';
       useFactory: () => ({
         maxlength: ({ requiredLength }: { requiredLength: number }) =>
           `Введите не более ${requiredLength} символов`,
+        required: () => {
+          return 'Выберите название для своего списка.';
+        },
       }),
     },
   ],
@@ -86,5 +90,22 @@ export class CreteNewFolderPage {
         }),
       )
       .subscribe();
+  }
+
+  protected getOut(): void {
+    if (this.nameControl.value || this.addedChats().length !== 0) {
+      this.dialogs
+        .open<boolean>(new PolymorpheusComponent(UnsavedChangesDialog), {
+          size: 's',
+        })
+
+        .subscribe((confirmed) => {
+          if (confirmed) {
+            this.context.complete();
+          }
+        });
+    } else {
+      this.context.complete();
+    }
   }
 }

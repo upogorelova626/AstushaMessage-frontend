@@ -1,0 +1,21 @@
+<div class="info">
+  <div class="label">Сбросить изменения?</div>
+
+  <div class="description">Если вы выйдете, несохранённые изменения будут потеряны.</div>
+</div>
+
+<div class="buttons">
+  <button type="button" tuiButton size="m" appearance="flat" (click)="context.completeWith(false)">
+    Отмена
+  </button>
+
+  <button
+    type="button"
+    tuiButton
+    size="m"
+    appearance="flat-destructive"
+    (click)="context.completeWith(true)"
+  >
+    Сбросить
+  </button>
+</div>

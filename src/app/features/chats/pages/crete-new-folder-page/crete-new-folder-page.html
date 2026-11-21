@@ -5,7 +5,7 @@
     appearance="flat"
     iconStart="@tui.chevron-left"
     class="button-round"
-    (click)="context.complete()"
+    (click)="getOut()"
   ></button>
   <div class="title">Создать новый список</div>
 </header>
@@ -14,7 +14,7 @@
   <input type="text" tuiInput [formControl]="nameControl" />
 </tui-textfield>
 
-<tui-error [formControl]="nameControl" />
+<tui-error [formControl]="nameControl" class="error" />
 
 <div class="included">
   <div class="included-title">Включены</div>
