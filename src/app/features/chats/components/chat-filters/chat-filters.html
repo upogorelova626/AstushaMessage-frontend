@@ -20,15 +20,7 @@
   </button>
 
   @for (list of chatLists(); track list.id) {
-    <button
-      tuiButton
-      type="button"
-      [appearance]="chatFilter() === list.id ? 'primary' : 'outline'"
-      size="s"
-      (click)="changeFilterValue(list.id)"
-    >
-      {{ list.name }}
-    </button>
+    <app-chat-list-item [list]="list" />
   }
 </div>
 

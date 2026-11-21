@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import type { ChatFolder, CreateNewFolder } from '../interfaces';
+import type { ChatFolder, CreateNewFolder, RenameFolder } from '../interfaces';
 import type { Observable } from 'rxjs';
 
 @Injectable({
@@ -18,4 +18,19 @@ export class ChatFolderService {
   getAllFolders(): Observable<ChatFolder[]> {
     return this.http.get<ChatFolder[]>(`${this.astushaMessengerApiUrl}/chat-folders`);
   }
+
+  renameFolder(folderId: string, payload: RenameFolder): Observable<ChatFolder> {
+    return this.http.patch<ChatFolder>(
+      `${this.astushaMessengerApiUrl}/chat-folders/${folderId}`,
+      payload,
+    );
+  }
+
+  deleteFolder(folderId: string): Observable<void> {
+    return this.http.delete<void>(`${this.astushaMessengerApiUrl}/chat-folders/${folderId}`);
+  }
+
+  //   addChatToFolder(){}
+
+  //   deleteChatFromFolder(){}
 }

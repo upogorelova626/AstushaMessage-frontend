@@ -3,6 +3,10 @@ export interface CreateNewFolder {
   chatIds: string[];
 }
 
+export interface RenameFolder {
+  name: string;
+}
+
 export interface ChatFolder {
   id: string;
   name: string;

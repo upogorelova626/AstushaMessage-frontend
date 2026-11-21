@@ -60,6 +60,7 @@ export class ChatsStoreService {
       .subscribe(({ chats, lists }) => {
         this.chats.set(chats);
         this.chatLists.set(lists);
+        this.chatsFilter.set('all');
       });
   }
 }

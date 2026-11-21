@@ -1,0 +1,26 @@
+<button
+  tuiButton
+  type="button"
+  size="s"
+  [appearance]="chatFilter() === list().id ? 'primary' : 'outline'"
+  (click)="changeFilterValue(list().id)"
+  [attr.aria-expanded]="open()"
+  [tuiDropdown]="dropdownContent"
+  [tuiDropdownManual]="open()"
+  [tuiObscuredEnabled]="open()"
+  (contextmenu)="onClick($event)"
+  (tuiActiveZoneChange)="onActiveZone($event)"
+  (tuiObscured)="onObscured($event)"
+>
+  {{ list().name }}
+
+  <ng-template #dropdownContent>
+    <tui-data-list size="s">
+      @for (action of actions; track action.title) {
+        <button tuiOption [iconStart]="action.icon" type="button" (click)="onSelect(action)">
+          {{ action.title }}
+        </button>
+      }
+    </tui-data-list>
+  </ng-template>
+</button>
