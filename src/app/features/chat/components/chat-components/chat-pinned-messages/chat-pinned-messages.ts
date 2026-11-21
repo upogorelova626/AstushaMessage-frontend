@@ -36,7 +36,7 @@ export class ChatPinnedMessages {
   protected max = computed(() => this.pinnedMessages().length);
 
   nextPinnedMessage(): void {
-    if (this.index() === this.max()) {
+    if (this.index() === this.max() - 1) {
       this.index.set(0);
     }
     this.index.set(this.index() + 1);
