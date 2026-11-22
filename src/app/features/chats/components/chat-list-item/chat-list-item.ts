@@ -1,11 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Injector, input, signal } from '@angular/core';
 import { TuiActiveZone, TuiObscured } from '@taiga-ui/cdk';
 import { TuiAppearance, TuiButton, TuiDataList, TuiDropdown, TuiOption } from '@taiga-ui/core';
-import type { ChatFolder } from '../../../../shared/interfaces';
+import type { ChatList } from '../../../../shared/interfaces';
 import { ChatsStoreService } from '../../services/chats-store.service';
 import { ChatFolderService } from '../../../../shared/services/chat-folder.service';
 import { NotificationService } from '../../../../shared/services/notification.service';
 import { catchError, EMPTY } from 'rxjs';
+import { SideBarService } from '../../../../shared/drawer/sidebar.service';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
+import { ChatFolderFormPage } from '../../pages/chat-folder-form-page/chat-folder-form-page';
 
 interface Action {
   readonly title: string;
@@ -31,17 +34,22 @@ interface Action {
 export class ChatListItem {
   private readonly chatsStoreService = inject(ChatsStoreService);
   private readonly chatFolderService = inject(ChatFolderService);
-  private readonly notificationService = inject(NotificationService);
 
-  readonly list = input.required<ChatFolder>();
+  private readonly notificationService = inject(NotificationService);
+  private readonly sidebarService = inject(SideBarService);
+
+  private readonly injector = inject(Injector);
+
+  readonly list = input.required<ChatList>();
 
   protected readonly chatFilter = this.chatsStoreService.chatsFilter;
   protected readonly open = signal(false);
 
   protected readonly actions: readonly Action[] = [
     {
-      title: 'Переименовать',
+      title: 'Редактировать',
       icon: '@tui.pencil',
+      action: () => this.editFolder(),
     },
     {
       title: 'Удалить',
@@ -80,7 +88,7 @@ export class ChatListItem {
     const folderId = this.list().id;
 
     this.chatFolderService
-      .deleteFolder(folderId)
+      .deleteChatsList(folderId)
       .pipe(
         catchError(() => {
           this.notificationService.openNegativeAlert('Не удалось удалить список');
@@ -88,5 +96,22 @@ export class ChatListItem {
         }),
       )
       .subscribe(() => this.chatsStoreService.loadChatsAndFolders());
+  }
+
+  private editFolder(): void {
+    this.sidebarService
+      .open$<ChatFolderFormPage, { folderId: string }>(
+        new PolymorpheusComponent(ChatFolderFormPage, this.injector),
+        {
+          overlay: false,
+          rounded: false,
+          offset: false,
+          closeOnClickOutside: true,
+          direction: 'start',
+        },
+        { folder: this.list() },
+      )
+      .pipe()
+      .subscribe();
   }
 }

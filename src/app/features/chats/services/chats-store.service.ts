@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { catchError, EMPTY, finalize, forkJoin } from 'rxjs';
 
-import type { Chat, ChatFolder } from '../../../shared/interfaces';
+import type { Chat, ChatList } from '../../../shared/interfaces';
 import { ChatService } from '../../../shared/services/chat.service';
 import { ChatFolderService } from '../../../shared/services/chat-folder.service';
 import { NotificationService } from '../../../shared/services/notification.service';
@@ -15,7 +15,7 @@ export class ChatsStoreService {
   private readonly notificationService = inject(NotificationService);
 
   readonly chats = signal<Chat[]>([]);
-  readonly chatLists = signal<ChatFolder[]>([]);
+  readonly chatLists = signal<ChatList[]>([]);
 
   readonly chatsFilter = signal<string>('all');
   readonly isLoading = signal<boolean>(false);
@@ -38,7 +38,7 @@ export class ChatsStoreService {
       return [];
     }
 
-    const chatIds = new Set(list.items.map((item) => item.chatId));
+    const chatIds = new Set(list.items.map((item) => item.chat.id));
 
     return chats.filter((chat) => chatIds.has(chat.id));
   });
@@ -48,7 +48,7 @@ export class ChatsStoreService {
 
     forkJoin({
       chats: this.chatService.getAllChats(),
-      lists: this.chatFolderService.getAllFolders(),
+      lists: this.chatFolderService.getAllChatsLists(),
     })
       .pipe(
         catchError(() => {

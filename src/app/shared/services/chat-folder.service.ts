@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import type { ChatFolder, CreateNewFolder, RenameFolder } from '../interfaces';
+import type { ChatList, CreateNewChatsList, EditChatsList } from '../interfaces';
 import type { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,22 +11,22 @@ export class ChatFolderService {
 
   private readonly astushaMessengerApiUrl = 'http://localhost:3005';
 
-  createNewFolder(payload: CreateNewFolder): Observable<ChatFolder> {
-    return this.http.post<ChatFolder>(`${this.astushaMessengerApiUrl}/chat-folders`, payload);
+  createNewChatsList(payload: CreateNewChatsList): Observable<ChatList> {
+    return this.http.post<ChatList>(`${this.astushaMessengerApiUrl}/chat-folders`, payload);
   }
 
-  getAllFolders(): Observable<ChatFolder[]> {
-    return this.http.get<ChatFolder[]>(`${this.astushaMessengerApiUrl}/chat-folders`);
+  getAllChatsLists(): Observable<ChatList[]> {
+    return this.http.get<ChatList[]>(`${this.astushaMessengerApiUrl}/chat-folders`);
   }
 
-  renameFolder(folderId: string, payload: RenameFolder): Observable<ChatFolder> {
-    return this.http.patch<ChatFolder>(
+  editChatsList(folderId: string, payload: EditChatsList): Observable<ChatList> {
+    return this.http.patch<ChatList>(
       `${this.astushaMessengerApiUrl}/chat-folders/${folderId}`,
       payload,
     );
   }
 
-  deleteFolder(folderId: string): Observable<void> {
+  deleteChatsList(folderId: string): Observable<void> {
     return this.http.delete<void>(`${this.astushaMessengerApiUrl}/chat-folders/${folderId}`);
   }
 

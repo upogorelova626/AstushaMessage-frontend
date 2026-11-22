@@ -4,7 +4,7 @@ import { TuiButton, TuiDataList, TuiDropdown, TuiHintDirective, TuiTitle } from 
 import { TuiChevron } from '@taiga-ui/kit';
 import { SideBarService } from '../../../../shared/drawer/sidebar.service';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
-import { CreteNewFolderPage } from '../../pages/crete-new-folder-page/crete-new-folder-page';
+import { ChatFolderFormPage } from '../../pages/chat-folder-form-page/chat-folder-form-page';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -60,8 +60,8 @@ export class ChatFolderMenuButton {
     this.isDrawerOpen.set(true);
 
     this.sidebarService
-      .open$<CreteNewFolderPage, null>(
-        new PolymorpheusComponent(CreteNewFolderPage, this.injector),
+      .open$<ChatFolderFormPage, null>(
+        new PolymorpheusComponent(ChatFolderFormPage, this.injector),
         {
           overlay: false,
           rounded: false,

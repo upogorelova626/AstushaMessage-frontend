@@ -1,0 +1,76 @@
+<header class="header">
+  <button
+    type="button"
+    tuiButton
+    appearance="flat"
+    iconStart="@tui.chevron-left"
+    class="button-round"
+    (click)="getOut()"
+  ></button>
+  @if (isEditing) {
+    <div class="title">Редактировать список</div>
+  } @else {
+    <div class="title">Создать новый список</div>
+  }
+</header>
+
+<tui-textfield iconEnd="@tui.face-slightly-smiling" class="textfield">
+  <input type="text" tuiInput [formControl]="nameControl" />
+</tui-textfield>
+
+<tui-error [formControl]="nameControl" class="error" />
+
+<div class="included">
+  <div class="included-title">Включены</div>
+  <button
+    type="button"
+    tuiButton
+    iconStart="@tui.circle-plus"
+    appearance="flat"
+    class="add-chats-button"
+    (click)="addChat()"
+  >
+    Добавьте группы или людей
+  </button>
+
+  <div class="chat-item">
+    @if (list) {
+      @for (chat of addedChats(); track chat.id) {
+        <app-chat-preview [chat]="chat" />
+
+        <button
+          type="button"
+          tuiButton
+          iconStart="@tui.trash"
+          appearance="flat-destructive"
+          class="button-round"
+          (click)="onRemove(chat.id)"
+        ></button>
+      }
+    } @else {
+      @for (chat of addedChats(); track chat.id) {
+        <app-chat-preview [chat]="chat" />
+
+        <button
+          type="button"
+          tuiButton
+          iconStart="@tui.trash"
+          appearance="flat-destructive"
+          class="button-round"
+          (click)="onRemove(chat.id)"
+        ></button>
+      }
+    }
+  </div>
+</div>
+
+<button
+  type="button"
+  tuiButton
+  size="m"
+  class="create-button"
+  [disabled]="addedChats().length === 0 || nameControl.invalid || isSaving()"
+  (click)="save()"
+>
+  {{ isEditing ? `Сохранить изменения` : 'Создать список' }}
+</button>
