@@ -26,7 +26,11 @@
           class="chat-item"
           (click)="toggleChat(chat)"
         >
-          <input type="checkbox" tuiCheckbox [checked]="addedChats().includes(chat)" />
+          <input
+            type="checkbox"
+            tuiCheckbox
+            [checked]="addedChats().some((item) => item.id === chat.id)"
+          />
           <app-chat-preview [chat]="chat" />
         </button>
       }

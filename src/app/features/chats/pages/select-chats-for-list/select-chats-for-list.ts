@@ -40,9 +40,10 @@ export class SelectChatsForList {
   private readonly currentUserService = inject(CurrentUserService);
 
   private readonly currentUser = toSignal(this.currentUserService.currentUser$);
+
   protected readonly addedChats = signal<Chat[]>([]);
 
-  protected readonly context = injectContext<TuiDialogContext<Chat[], void>>();
+  protected readonly context = injectContext<TuiDialogContext<Chat[], { addedChats: Chat[] }>>();
 
   protected readonly chats = this.chatsStoreService.chats;
 
@@ -88,12 +89,17 @@ export class SelectChatsForList {
     });
   });
 
-  protected toggleChat(chat: Chat): void {
-    this.addedChats.update((chats) =>
-      chats.includes(chat) ? chats.filter((id) => id !== chat) : [...chats, chat],
-    );
+  constructor() {
+    this.addedChats.set(this.context.data.addedChats);
   }
 
+  protected toggleChat(chat: Chat): void {
+    this.addedChats.update((chats) =>
+      chats.some((item) => item.id === chat.id)
+        ? chats.filter((item) => item.id !== chat.id)
+        : [...chats, chat],
+    );
+  }
   protected save(): void {
     this.context.completeWith(this.addedChats());
   }
