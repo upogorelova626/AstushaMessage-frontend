@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, Injector, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  Injector,
+  input,
+  signal,
+} from '@angular/core';
 import { TuiDataList, TuiDropdown } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { catchError, EMPTY, finalize, tap, timer } from 'rxjs';
@@ -30,6 +38,17 @@ export class ChangeListButton {
   protected readonly isDrawerOpen = signal(false);
   protected open = signal(false);
   protected changedLists = signal(0);
+
+  protected buttonLabel = computed(() => {
+    const chatLists = this.chatLists();
+    const chat = this.chat();
+
+    if (chatLists.some((list) => list.items.some((item) => item.chat.id === chat.id))) {
+      return 'Изменить список';
+    } else {
+      return 'Добавить в список';
+    }
+  });
 
   protected isChatInList(folderId: string): boolean {
     const chatId = this.chat().id;

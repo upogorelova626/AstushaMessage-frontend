@@ -11,6 +11,7 @@ import {
 import { OpenedChatService } from '../../../services/opened-chat.service';
 import { ActionsWithChatService } from '../../../services/actions-with-chat.service';
 import { ChatRemovalService } from '../../../services/chat-removal.service';
+import { ChangeListButton } from '../../../../chats/components/change-list-button/change-list-button';
 
 interface Action {
   readonly title: string;
@@ -18,11 +19,6 @@ interface Action {
   readonly iconEnd?: string;
   readonly action?: () => void;
 }
-
-// interface EditChatParametrs {
-//   chatIsOpen: boolean;
-//   chatId?: string;
-// }
 
 @Component({
   selector: 'app-chat-menu-button',
@@ -35,6 +31,7 @@ interface Action {
     TuiActiveZone,
     TuiOption,
     TuiAppearance,
+    ChangeListButton,
   ],
   templateUrl: './chat-menu-button.html',
   styleUrl: './chat-menu-button.less',
@@ -45,7 +42,7 @@ export class ChatMenuButton {
   private readonly actionsWithChat = inject(ActionsWithChatService);
   private readonly chatRemovalService = inject(ChatRemovalService);
 
-  private readonly chat = this.openedChatService.chat;
+  protected readonly chat = this.openedChatService.chat;
 
   protected readonly actionsFirst = computed<readonly Action[]>(() => [
     {
@@ -89,12 +86,7 @@ export class ChatMenuButton {
         });
       },
     },
-    {
-      title: 'Изменить список',
-      iconStart: '@tui.images',
-      iconEnd: '@tui.chevron-right',
-      //   action: () => this.actionsWithChat.changeList(),
-    },
+
     {
       title: 'Экспорт чата',
       iconStart: '@tui.download',

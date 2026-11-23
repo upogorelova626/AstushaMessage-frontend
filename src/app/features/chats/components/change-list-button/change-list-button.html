@@ -8,7 +8,7 @@
   [tuiDropdownSided]="true"
   [(tuiDropdownOpen)]="open"
 >
-  Изменить список
+  {{ buttonLabel() }}
 </button>
 <ng-template #dropdown let-close>
   <tui-data-list>
@@ -17,7 +17,10 @@
         <button
           tuiOption
           type="button"
+          class="button"
           [iconStart]="isChatInList(list.id) ? '@tui.check' : null"
+          [class.button-icon]="isChatInList(list.id)"
+          [class.button_no-icon]="!isChatInList(list.id)"
           (click)="toggleListChat(list.id)"
         >
           {{ list.name }}
