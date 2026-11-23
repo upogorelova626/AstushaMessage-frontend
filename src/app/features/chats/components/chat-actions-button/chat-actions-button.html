@@ -27,6 +27,10 @@
             {{ action.title }}
           </button>
         }
+
+        <app-chat-muted-button [chat]="chat()" />
+
+        <app-change-list-button [chat]="chat()" />
       </tui-opt-group>
 
       <hr />

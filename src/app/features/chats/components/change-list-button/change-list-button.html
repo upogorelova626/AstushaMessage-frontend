@@ -1,0 +1,34 @@
+<button
+  iconStart="@tui.images"
+  size="m"
+  tuiOption
+  tuiDropdownAlign="end"
+  type="button"
+  [tuiDropdown]="dropdown"
+  [tuiDropdownSided]="true"
+  [(tuiDropdownOpen)]="open"
+>
+  Изменить список
+</button>
+<ng-template #dropdown let-close>
+  <tui-data-list>
+    <tui-opt-group>
+      @for (list of chatLists(); track list.id) {
+        <button
+          tuiOption
+          type="button"
+          [iconStart]="isChatInList(list.id) ? '@tui.check' : null"
+          (click)="toggleListChat(list.id)"
+        >
+          {{ list.name }}
+        </button>
+      }
+    </tui-opt-group>
+    <hr />
+    <tui-opt-group>
+      <button tuiOption type="button" iconStart="@tui.plus" (click)="createNewList()">
+        Новый список
+      </button>
+    </tui-opt-group>
+  </tui-data-list>
+</ng-template>

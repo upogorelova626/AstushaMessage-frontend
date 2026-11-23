@@ -11,6 +11,10 @@ export interface RenameFolder {
   name: string;
 }
 
+export interface AddChatToFolder {
+  chatId: string;
+}
+
 export interface ChatList {
   id: string;
   name: string;

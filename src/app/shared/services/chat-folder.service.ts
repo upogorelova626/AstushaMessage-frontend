@@ -30,7 +30,16 @@ export class ChatFolderService {
     return this.http.delete<void>(`${this.astushaMessengerApiUrl}/chat-folders/${folderId}`);
   }
 
-  //   addChatToFolder(){}
+  addChatToFolder(folderId: string, chatId: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.astushaMessengerApiUrl}/chat-folders/${folderId}/chats/${chatId}`,
+      null,
+    );
+  }
 
-  //   deleteChatFromFolder(){}
+  deleteChatFromFolder(folderId: string, chatId: string): Observable<void> {
+    return this.http.delete<void>(
+      `${this.astushaMessengerApiUrl}/chat-folders/${folderId}/chats/${chatId}`,
+    );
+  }
 }

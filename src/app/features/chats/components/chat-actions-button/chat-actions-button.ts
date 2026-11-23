@@ -13,6 +13,8 @@ import { TuiChevron } from '@taiga-ui/kit';
 import { ActionsWithChatService } from '../../../chat/services/actions-with-chat.service';
 import type { Chat } from '../../../../shared/interfaces';
 import { ChatRemovalService } from '../../../chat/services/chat-removal.service';
+import { ChatMutedButton } from '../chat-muted-button/chat-muted-button';
+import { ChangeListButton } from '../change-list-button/change-list-button';
 
 interface Action {
   readonly title: string;
@@ -32,6 +34,8 @@ interface Action {
     TuiOption,
     TuiAppearance,
     TuiActiveZone,
+    ChatMutedButton,
+    ChangeListButton,
   ],
   templateUrl: './chat-actions-button.html',
   styleUrl: './chat-actions-button.less',
@@ -92,13 +96,6 @@ export class ChatActionsButton {
           chatId: this.chat().id,
           isFavorite: !this.chat().settings.isFavorite,
         });
-      },
-    },
-    {
-      title: 'Изменить список',
-      iconStart: '@tui.images',
-      action: () => {
-        // this.actionsWithChatService.changeList();
       },
     },
   ]);
